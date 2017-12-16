@@ -1,0 +1,29 @@
+{
+	"name": "webp-hero",
+	"version": "0.0.0-dev",
+	"description": "webp for web browsers",
+	"main": "dist/webpjs/webp.js",
+	"files": [
+		"dist/webpjs/webp.js",
+		"dist/webpjs/webp.mem"
+	],
+	"scripts": {
+		"start": "http-server",
+		"test": "exit 0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/chase-moskal/webp-hero.git"
+	},
+	"keywords": [],
+	"author": "Chase Moskal <chasemoskal@gmail.com>",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/chase-moskal/webp-hero/issues"
+	},
+	"homepage": "https://github.com/chase-moskal/webp-hero#readme",
+	"dependencies": {},
+	"devDependencies": {
+		"http-server": "0.10.0"
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+
+	"files.eol": "\n",
+	"files.encoding": "utf8",
+	"files.insertFinalNewline": true,
+
+	"files.exclude": {
+		"dist": false,
+		"coverage": true,
+		"node_modules": true,
+		"*.log*": true
+	},
+
+	"typescript.tsdk": "node_modules/typescript/lib/"
+}
