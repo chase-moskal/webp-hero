@@ -1,11 +1,11 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev",
+	"version": "0.0.0-dev.1",
 	"description": "webp for web browsers",
 	"main": "dist/webpjs/webp.js",
 	"files": [
 		"dist/webpjs/webp.js",
-		"dist/webpjs/webp.mem"
+		"dist/webpjs/webp.js.mem"
 	],
 	"scripts": {
 		"start": "http-server",
