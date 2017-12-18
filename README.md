@@ -48,14 +48,17 @@ development
 -----------
 
 - **prerequisites**
-	- docker
+	- git
 	- node
+	- docker (if you want to rebuild libwebpjs)
 
-- **run the build script**
-	- `./build.sh` — use admin privileges (docker requires this)
+- **build libwebpjs** *(not necessary)*
+	- `./libwebpjs-build.sh` — use admin privileges (docker requires this)
 	- it runs the docker build of libwebp (takes a long time)
 	- it writes build artifacts to `dist/`
+	- `./libwebpjs-debug.sh` — useful to drop into the container to have a look around
 
-- **run the http server**
-	- `npm start`
+- **development based on top of libwebpjs**
+	- `npm install` — install dependencies and run build
+	- `npm start` — start http server
 	- visit http://localhost:8080/ to see google's web demo

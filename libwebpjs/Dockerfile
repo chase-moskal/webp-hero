@@ -60,7 +60,7 @@ ADD . /work
 
 # replace libwebp emscripten cmake instructions
 RUN rm -rf /work/libwebp/CMakeLists.txt \
-  && cp /work/scripts/CMakeLists.txt /work/libwebp
+  && cp /work/source/CMakeLists.txt /work/libwebp
 
 RUN ["/bin/bash", "-c", "cd /work/emsdk-portable \
   && source ./emsdk_env.sh \

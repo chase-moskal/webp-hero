@@ -1,13 +1,16 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev.2",
+	"version": "0.0.0-dev.3",
 	"description": "webp for web browsers",
 	"main": "dist/webpjs/webp.js",
 	"files": [
-		"dist/webpjs/webp.js"
+		"dist"
 	],
 	"scripts": {
 		"start": "http-server",
+		"prepare": "run-s clean minify-webpjs",
+		"clean": "rimraf dist && mkdir dist",
+		"minify-webpjs": "uglifyjs -cm < libwebpjs/dist/webp.js > dist/webp.min.js",
 		"test": "exit 0"
 	},
 	"repository": {
@@ -23,6 +26,9 @@
 	"homepage": "https://github.com/chase-moskal/webp-hero#readme",
 	"dependencies": {},
 	"devDependencies": {
-		"http-server": "0.10.0"
+		"http-server": "0.10.0",
+		"npm-run-all": "4.1.2",
+		"rimraf": "2.6.2",
+		"uglify-js": "3.2.2"
 	}
 }

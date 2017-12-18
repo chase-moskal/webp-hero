@@ -15,5 +15,4 @@
 # mkdir /dist/images
 # cp /work/images/* /dist/images
 
-mkdir /dist/webpjs
-cp -r /work/libwebp/webp_js/*.{js,html,webp} /dist/webpjs
+cp -r /work/libwebp/webp_js/*.{js,html,webp} /dist
