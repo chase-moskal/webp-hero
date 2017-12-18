@@ -1,4 +1,4 @@
 
-/dist
-/dist-cjs
+# /dist
+# /dist-cjs
 /node_modules
