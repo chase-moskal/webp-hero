@@ -1,7 +1,6 @@
 
-
 	return {
-		webpToSdl: Module.cwrap('WebpToSDL', 'number', ['array', 'number'])
+		webpToSdl: Module.cwrap('WebpToSDL', 'number', ['array', 'number']),
+		setCanvas: function(canvas) { Module.canvas = canvas }
 	}
-
-})()
+}));
