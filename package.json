@@ -4,8 +4,7 @@
 	"description": "webp for web browsers",
 	"main": "dist/webpjs/webp.js",
 	"files": [
-		"dist/webpjs/webp.js",
-		"dist/webpjs/webp.js.mem"
+		"dist/webpjs/webp.js"
 	],
 	"scripts": {
 		"start": "http-server",

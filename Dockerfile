@@ -3,7 +3,6 @@ FROM debian:stretch-slim
 RUN mkdir /work
 RUN apt-get update && apt-get install -y \
   vim git-core curl \
-  gcc make autoconf automake libtool \
   build-essential cmake python nodejs \
   libpng-dev libjpeg-dev
 
@@ -33,13 +32,13 @@ RUN mkdir /work/libwebp && cd /work/libwebp \
   && git clone --branch master https://github.com/webmproject/libwebp.git . \
   && git checkout c2d04f3e
 
-# compile cli via cmake
-RUN cd /work/libwebp \
-  && mkdir build \
-  && cd build \
-  && cmake -DWEBP_BUILD_CWEBP=ON -DWEBP_BUILD_DWEBP=ON ../ \
-  && make \
-  && make install
+# # compile cli via cmake
+# RUN cd /work/libwebp \
+#   && mkdir build \
+#   && cd build \
+#   && cmake -DWEBP_BUILD_CWEBP=ON -DWEBP_BUILD_DWEBP=ON ../ \
+#   && make \
+#   && make install
 
 # compile cli via autoconf
 # RUN cd /work/libwebp \
@@ -55,13 +54,13 @@ RUN cd /work/libwebp \
 
 ADD . /work
 
-# replace libwebp emscripten cmake instructions
-RUN rm -rf /work/libwebp/CMakeLists.txt \
-  && cp /work/scripts/CMakeLists.txt /work/libwebp
-
 ##
 ## LIBWEBP EMSCRIPTEN BUILD
 ##
+
+# replace libwebp emscripten cmake instructions
+RUN rm -rf /work/libwebp/CMakeLists.txt \
+  && cp /work/scripts/CMakeLists.txt /work/libwebp
 
 RUN ["/bin/bash", "-c", "cd /work/emsdk-portable \
   && source ./emsdk_env.sh \
