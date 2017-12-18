@@ -29,7 +29,9 @@ RUN ["/bin/bash", "-c", "cd /work/emsdk-portable && source ./emsdk_env.sh && emc
 ## LIBWEBP
 ##
 
-RUN git clone --branch v0.6.1 https://github.com/webmproject/libwebp.git /work/libwebp
+RUN mkdir /work/libwebp && cd /work/libwebp \
+  && git clone --branch master https://github.com/webmproject/libwebp.git . \
+  && git checkout c2d04f3e
 
 # compile cli via cmake
 RUN cd /work/libwebp \
