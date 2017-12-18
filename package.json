@@ -1,6 +1,6 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev.1",
+	"version": "0.0.0-dev.2",
 	"description": "webp for web browsers",
 	"main": "dist/webpjs/webp.js",
 	"files": [
