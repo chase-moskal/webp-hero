@@ -1,0 +1,7 @@
+
+
+	return {
+		webpToSdl: Module.cwrap('WebpToSDL', 'number', ['array', 'number'])
+	}
+
+})()

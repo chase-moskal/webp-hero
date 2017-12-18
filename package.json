@@ -1,16 +1,17 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev.3",
+	"version": "0.0.0-dev.4",
 	"description": "webp for web browsers",
-	"main": "dist/webpjs/webp.js",
+	"main": "dist/dwebp.js",
 	"files": [
 		"dist"
 	],
 	"scripts": {
 		"start": "http-server",
-		"prepare": "run-s clean minify-webpjs",
+		"prepare": "run-s clean wrap minify",
 		"clean": "rimraf dist && mkdir dist",
-		"minify-webpjs": "uglifyjs -cm < libwebpjs/dist/webp.js > dist/webp.min.js",
+		"wrap": "cat source/wrapping.js.start.txt libwebpjs/dist/webp.js source/wrapping.js.end.txt > dist/dwebp.raw.js",
+		"minify": "uglifyjs -cm < dist/dwebp.raw.js > dist/dwebp.js && rimraf dist/dwebp.raw.js",
 		"test": "exit 0"
 	},
 	"repository": {
