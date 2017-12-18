@@ -1,0 +1,1 @@
+{"version":3,"file":"parse-data-url.js","sourceRoot":"","sources":["../../source/utils/parse-data-url.ts"],"names":[],"mappings":"AACA,MAAM,UAAU,YAAY,CAAC,OAAe;IAC3C,MAAM,KAAK,GAAG,OAAO,CAAC,KAAK,CAAC,2BAA2B,CAAC,CAAA;IACxD,IAAI,KAAK,EAAE;QACV,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,GAAG,KAAK,CAAA;QAC9B,OAAO,EAAC,MAAM,EAAE,MAAM,EAAC,CAAA;KACvB;AACF,CAAC"}
