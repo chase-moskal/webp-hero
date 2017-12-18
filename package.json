@@ -1,10 +1,11 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev.5",
+	"version": "0.0.0-dev.6",
 	"description": "webp for web browsers",
 	"main": "dist/dwebp.js",
 	"files": [
-		"dist"
+		"dist",
+		"source/webp-polyfill.js"
 	],
 	"scripts": {
 		"start": "http-server",
