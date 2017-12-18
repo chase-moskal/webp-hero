@@ -53,8 +53,8 @@ development
 
 - **run the build script**
 	- `./build.sh` — use admin privileges (docker requires this)
-	- run the docker build of libwebp (takes a long time)
-	- write build artifacts to `dist/`
+	- it runs the docker build of libwebp (takes a long time)
+	- it writes build artifacts to `dist/`
 
 - **run the http server**
 	- `npm start`

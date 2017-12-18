@@ -2,14 +2,14 @@
 FROM debian:stretch-slim
 RUN mkdir /work
 RUN apt-get update && apt-get install -y \
-  git-core curl \
+  vim git-core curl \
   gcc make autoconf automake libtool \
   build-essential cmake python nodejs \
   libpng-dev libjpeg-dev
 
-####
-#### EMSCRIPTEN
-####
+##
+## EMSCRIPTEN
+##
 
 # download emscripten
 RUN cd /work \
@@ -19,25 +19,17 @@ RUN cd /work \
 # run emscripten self installation
 RUN cd /work/emsdk-portable \
   && ./emsdk update \
-  && ./emsdk install latest \
-  && ./emsdk activate latest
+  && ./emsdk install sdk-1.37.22-64bit \
+  && ./emsdk activate sdk-1.37.22-64bit
 
 # verify emscripten
 RUN ["/bin/bash", "-c", "cd /work/emsdk-portable && source ./emsdk_env.sh && emcc --version"]
 
-####
-#### LIBWEBP
-####
+##
+## LIBWEBP
+##
 
-RUN git clone https://github.com/webmproject/libwebp.git /work/libwebp
-
-# compile cli via autoconf
-# RUN cd /work/libwebp \
-#   && ./autogen.sh \
-#   && ./configure \
-#   && make \
-#   && make install \
-#   && ldconfig /usr/local/lib
+RUN git clone --branch v0.6.1 https://github.com/webmproject/libwebp.git /work/libwebp
 
 # compile cli via cmake
 RUN cd /work/libwebp \
@@ -47,7 +39,18 @@ RUN cd /work/libwebp \
   && make \
   && make install
 
-# compile via emscripten
+# compile cli via autoconf
+# RUN cd /work/libwebp \
+#   && ./autogen.sh \
+#   && ./configure \
+#   && make \
+#   && make install \
+#   && ldconfig /usr/local/lib
+
+##
+## LIBWEBP EMSCRIPTEN BUILD
+##
+
 RUN ["/bin/bash", "-c", "cd /work/emsdk-portable \
   && source ./emsdk_env.sh \
   && cd /work/libwebp/webp_js \
@@ -57,8 +60,8 @@ RUN ["/bin/bash", "-c", "cd /work/emsdk-portable \
     ../ \
   && make"]
 
-# TEST IMAGE ENCODE AND DECODE
+##
+## ADD LOCAL FILES INTO WORK DIR
+##
+
 ADD . /work
-RUN cd /work/images \
-  && cwebp dice.original.png -o dice.webp \
-  && dwebp dice.webp -o dice.png
