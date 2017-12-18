@@ -50,6 +50,16 @@ RUN cd /work/libwebp \
 #   && ldconfig /usr/local/lib
 
 ##
+## ADD LOCAL FILES INTO WORK DIR
+##
+
+ADD . /work
+
+# replace libwebp emscripten cmake instructions
+RUN rm -rf /work/libwebp/CMakeLists.txt \
+  && cp /work/scripts/CMakeLists.txt /work/libwebp
+
+##
 ## LIBWEBP EMSCRIPTEN BUILD
 ##
 
@@ -61,9 +71,3 @@ RUN ["/bin/bash", "-c", "cd /work/emsdk-portable \
     -DCMAKE_TOOLCHAIN_FILE=$EMSCRIPTEN/cmake/Modules/Platform/Emscripten.cmake \
     ../ \
   && make"]
-
-##
-## ADD LOCAL FILES INTO WORK DIR
-##
-
-ADD . /work
