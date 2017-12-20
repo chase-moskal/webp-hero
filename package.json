@@ -1,6 +1,6 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev.10",
+	"version": "0.0.0-dev.11",
 	"description": "webp for web browsers",
 	"main": "dist/webp-hero",
 	"types": "dist/webp-hero.d.ts",

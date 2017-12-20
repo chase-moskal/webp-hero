@@ -289,7 +289,7 @@ if(WEBP_BUILD_WEBP_JS)
   target_link_libraries(webp_js webpdecoder SDL)
   set(WEBP_HAVE_SDL 1)
   set_target_properties(webp_js PROPERTIES LINK_FLAGS
-      "-s EXPORTED_FUNCTIONS='[\"_WebpToSDL\"]' -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 --memory-init-file 0")
+      "-s EXPORTED_FUNCTIONS='[\"_WebpToSDL\"]' -s INVOKE_RUN=0 -s TOTAL_MEMORY=67108864 -s ALLOW_MEMORY_GROWTH=1 --memory-init-file 0")
   set_target_properties(webp_js PROPERTIES OUTPUT_NAME webp)
   target_compile_definitions(webp_js PUBLIC EMSCRIPTEN WEBP_HAVE_SDL)
 
