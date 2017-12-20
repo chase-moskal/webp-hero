@@ -9,10 +9,12 @@
 	],
 	"scripts": {
 		"start": "http-server",
-		"prepare": "run-s clean wrap minify",
+		"prepare": "run-s clean wrap minify compile bundle",
 		"clean": "rimraf dist && mkdir dist",
 		"wrap": "cat source/wrapping.js.start.txt libwebpjs/dist/webp.js source/wrapping.js.end.txt > dist/dwebp.raw.js",
 		"minify": "uglifyjs -cm < dist/dwebp.raw.js > dist/dwebp.js && rimraf dist/dwebp.raw.js",
+		"compile": "tsc",
+		"bundle": "browserify -p [ tsify ] --debug source/webp-hero.global.ts > dist/webp-hero.global.bundle.js",
 		"test": "exit 0"
 	},
 	"repository": {
@@ -28,9 +30,12 @@
 	"homepage": "https://github.com/chase-moskal/webp-hero#readme",
 	"dependencies": {},
 	"devDependencies": {
+		"browserify": "14.5.0",
 		"http-server": "0.10.0",
 		"npm-run-all": "4.1.2",
 		"rimraf": "2.6.2",
+		"tsify": "3.0.4",
+		"typescript": "2.6.2",
 		"uglify-js": "3.2.2"
 	}
 }
