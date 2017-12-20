@@ -11,13 +11,13 @@ browser polyfill for the webp image format
 
 - `npm install webp-hero`
 
-simply add [webp-hero.polyfill.bundle.js](./dist/webp-hero.polyfill.bundle.js) to your html page, and your webp images come alive in firefox, safari, edge, internet explorer, and of course, chrome
+simply add [webp-hero.polyfill.bundle.js](https://raw.githubusercontent.com/chase-moskal/webp-hero/gh-pages/dist/webp-hero.polyfill.bundle.js) to your html page, and your webp images come alive in firefox, safari, edge, internet explorer, and of course, chrome
 
 webp-hero actually runs google's `libwebp` decoder in the browser — it converts webp images to png's on-the-fly
 
 the polyfill renders the decoded image data to a hidden canvas, and converts that to a png data url which is then displayed to the user
 
-webp-hero's polyfill bundle is actually kinda heavy weight at almost 500 KB
+webp-hero's polyfill bundle is actually kinda heavy weight at almost 150 KB gzipped
 
 it's a trade-off — it pushes the burden off your bandwidth expense, and onto your user's processor (running the decoder instead of serving up fat images)
 
@@ -25,12 +25,12 @@ it's a trade-off — it pushes the burden off your bandwidth expense, and onto y
 features
 --------
 
-- [**webp-hero.polyfill.bundle.js**](./dist/webp-hero.polyfill.bundle.js)
+- [**webp-hero.polyfill.bundle.js**](https://raw.githubusercontent.com/chase-moskal/webp-hero/gh-pages/dist/webp-hero.polyfill.bundle.js)
 	- just run that script on your html page
 	- it will decode your page's webp images (currently only img tags)
-	- the functionality is directly available with the `"webp-hero"` common-js module [webp-hero.polyfill.js](./source/webp-hero.polyfill.ts)
+	- the functionality is directly available with the `"webp-hero"` common-js module [webp-hero.js](./source/webp-hero.ts)
 
-- [**dwebp.js**](./dist/dwebp.js)
+- [**dwebp.js**](https://raw.githubusercontent.com/chase-moskal/webp-hero/gh-pages/dist/dwebp.js)
 	- this is compiled from google's `libwebp` emscripten build, and then wrapped in a common-js module
 	- contains minimal functionality for rendering webp data to a canvas — no polyfilling logic
 	- available as common-js module via `"webp-hero/dist/dwebp"`
