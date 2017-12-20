@@ -1,6 +1,7 @@
 
-	return {
-		webpToSdl: Module.cwrap('WebpToSDL', 'number', ['array', 'number']),
-		setCanvas: function(canvas) { Module.canvas = canvas }
-	}
-}));
+	this.Module = Module
+	this.webpToSdl = Module.cwrap("WebpToSDL", "number", ["array", "number"])
+	this.setCanvas = function(canvas) { Module.canvas = canvas }
+}
+
+module.exports = Dwebp

@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"rootDir": "source",
+		"outDir": "dist",
+		"target": "es5",
+		"lib": ["es6", "dom"],
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"experimentalDecorators": true,
+		"declaration": true,
+		"sourceMap": true
+	}
+}
