@@ -2,46 +2,37 @@
 ![webp-hero](webp-hero.jpg)
 
 
-webp-hero
+webp-hero — [live demo](https://chase-moskal.github.io/webp-hero/)
 =========
-
-***work in progress!*** *webp-hero is coming soon!*
 
 
 browser polyfill for the webp image format
 ------------------------------------------
 
-simply add a single script to your html page, and your webp images come alive in firefox, safari, edge, and internet explorer
+- `npm install webp-hero`
+
+simply add [webp-hero.polyfill.bundle.js](./dist/webp-hero.polyfill.bundle.js) to your html page, and your webp images come alive in firefox, safari, edge, internet explorer, and of course, chrome
 
 webp-hero actually runs google's `libwebp` decoder in the browser — it converts webp images to png's on-the-fly
 
-the polyfill renders the decoded image data to a hidden canvas, then converting that to a png data url, which is then displayed to the user
+the polyfill renders the decoded image data to a hidden canvas, and converts that to a png data url which is then displayed to the user
 
-this pushes the burden off your bandwidth expense, and onto your user's processor (running the decoder)
-
-
-current state
--------------
-
-- within a docker container, we've got libwebp producing `webp.js` and the associated demo page
+this pushes the burden off your bandwidth expense, and onto your user's processor (running the decoder instead of serving up fat images)
 
 
-immediate technical goals
--------------------------
+features
+--------
 
-- **webp decoder javascript module**
-	- is called `"dwebp.js"`, and is self-contained
-	- contains minimum functionality to decode webp
-	- available in es6 and umd module formats
-	- uses a worker thread for each decoding operation
-	- published to npm
+- [**webp-hero.polyfill.bundle.js**](./dist/webp-hero.polyfill.bundle.js)
+	- just run that script on your html page
+	- it will decode your page's webp images (currently only img tags)
+	- the functionality is directly available with the `"webp-hero"` common-js module [webp-hero.polyfill.js](./source/webp-hero.polyfill.ts)
 
-- **webp polyfill**
-	- `"webp-hero.js"`
-	- decoder is bundled in
-	- loops through web page's webp images
-	- decodes webp and renders to hidden canvas
-	- replaces image sources with png data url's
+- [**dwebp.js**](./dist/dwebp.js)
+	- this is compiled from google's `libwebp` emscripten build, and then wrapped in a common-js module
+	- contains minimal functionality for rendering webp data to a canvas — no polyfilling logic
+	- available as common-js module via `"webp-hero/dist/dwebp"`
+	- see the typescript declaration file, [dwebp.d.ts](./source/dwebp.d.ts), which describes its usage signature
 
 
 development

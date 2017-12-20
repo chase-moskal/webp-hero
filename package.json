@@ -1,11 +1,11 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev.6",
+	"version": "0.0.0-dev.7",
 	"description": "webp for web browsers",
-	"main": "dist/dwebp.js",
+	"main": "dist/webp-hero",
+	"types": "dist/webp-hero.d.ts",
 	"files": [
-		"dist",
-		"source/webp-polyfill.js"
+		"dist"
 	],
 	"scripts": {
 		"start": "http-server",
@@ -14,7 +14,7 @@
 		"wrap": "cat source/wrapping.js.start.txt libwebpjs/dist/webp.js source/wrapping.js.end.txt > dist/dwebp.raw.js",
 		"minify": "uglifyjs -cm < dist/dwebp.raw.js > dist/dwebp.js && rimraf dist/dwebp.raw.js",
 		"compile": "tsc",
-		"bundle": "browserify -p [ tsify ] --debug source/webp-hero.global.ts > dist/webp-hero.global.bundle.js",
+		"bundle": "browserify -p [ tsify ] source/webp-hero.polyfill.ts > dist/webp-hero.polyfill.bundle.js",
 		"test": "exit 0"
 	},
 	"repository": {

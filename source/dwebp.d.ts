@@ -1,4 +1,9 @@
 
 declare module "dwebp" {
-	export function decode(imgurl: string): Promise<string>
+	class Dwebp {
+		Module: any
+		webpToSdl(webpdata: Uint8Array): number
+		setCanvas(canvas: HTMLCanvasElement): void
+	}
+	export = Dwebp
 }

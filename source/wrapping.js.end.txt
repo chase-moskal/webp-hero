@@ -1,49 +1,7 @@
 
-	function loadData(url) {
-		return new Promise(function(resolve, reject) {
-			var xhr = new XMLHttpRequest()
-			xhr.open("GET", url)
-			xhr.responseType = "arraybuffer"
-			xhr.onerror = function(error) { reject(error) }
-			xhr.onreadystatechange = function() {
-				if (xhr.readyState == 4 && xhr.status == 200) {
-					resolve(new Uint8Array(xhr.response))
-				}
-			}
-			xhr.send()
-		})
-	}
+	this.Module = Module
+	this.webpToSdl = Module.cwrap("WebpToSDL", "number", ["array", "number"])
+	this.setCanvas = function(canvas) { Module.canvas = canvas }
+}
 
-	function relax() {
-		return new Promise(function(resolve, reject) {
-			requestAnimationFrame(resolve)
-		})
-	}
-
-	var webpToSdl = Module.cwrap("WebpToSDL", "number", ["array", "number"])
-	var setCanvas = function(canvas) { Module.canvas = canvas }
-	var busy = false
-
-	function Dwebp() {}
-	Dwebp.prototype.decode = function(imgsrc) {
-		if (busy) throw new Error("cannot decode when dwebp is already busy")
-		busy = true
-		var dwebp = this
-		return loadData(imgsrc)
-			.then(function(imgdata) {
-				return relax().then(function() {
-					var canvas = document.createElement("canvas")
-					dwebp.setCanvas(canvas)
-					dwebp.webpToSdl(imgdata, imgdata.length)
-					busy = false
-					return canvas.toDataURL()
-				})
-			})
-			.catch(function(error) {
-				busy = false
-				throw error
-			})
-	}
-
-	return new Dwebp()
-}))
+module.exports = Dwebp
