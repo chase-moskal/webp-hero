@@ -38,6 +38,7 @@ const relax = () => new Promise((resolve, reject) =>requestAnimationFrame(resolv
 export default class WebpHero {
 	private readonly dwebp
 	private busy = false
+	private cache = {}
 
 	constructor({dwebp = new Dwebp()}: {dwebp?: any} = {}) {
 		this.dwebp = dwebp
@@ -67,10 +68,14 @@ export default class WebpHero {
 		for (const image of Array.from(document.querySelectorAll("img"))) {
 			const src = image.src
 			if (/.webp$/.test(src)) {
+				if (this.cache[src]) {
+					image.src = this.cache[src]
+					continue
+				}
 				try {
 					const webpdata = await loadBinaryData(src)
 					const pngdata = await this.decode(webpdata)
-					image.src = pngdata
+					image.src = this.cache[src] = pngdata
 				} catch (error) {
 					console.error(`error decoding webp image "${src}"`, error)
 					throw error
