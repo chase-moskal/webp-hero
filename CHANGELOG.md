@@ -17,7 +17,7 @@
 
 	```html
 	<!-- replace this: -->
-	<script src="webp-hero/dist/webp-hero.polyfill.js"></script>
+	<script src="webp-hero/dist/webp-hero.polyfill.bundle.js"></script>
 
 	<!-- with this: -->
 	<script src="webp-hero/dist/webp-hero.bundle.js"></script>
