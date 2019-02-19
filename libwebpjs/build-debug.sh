@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-cd libwebpjs
+cd "${0%/*}"
 docker build -t webphero .
 docker run -it --rm webphero
