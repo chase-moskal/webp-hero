@@ -11,8 +11,8 @@
 		"start": "http-server",
 		"prepare": "run-s clean wrap minify compile bundle",
 		"clean": "rimraf dist && mkdir dist",
-		"wrap": "cat source/wrapping.js.start.txt libwebpjs/dist/webp.js source/wrapping.js.end.txt > dist/dwebp.raw.js",
-		"minify": "uglifyjs -cm < dist/dwebp.raw.js > dist/dwebp.js && rimraf dist/dwebp.raw.js",
+		"wrap": "concat-cli -f source/wrapping.js.start.txt libwebpjs/dist/webp.js source/wrapping.js.end.txt -o dist/dwebp.big.js",
+		"minify": "uglifyjs -cm < dist/dwebp.big.js > dist/dwebp.js",
 		"compile": "tsc",
 		"bundle": "browserify -p [ tsify ] source/webp-hero.polyfill.ts > dist/webp-hero.polyfill.bundle.js",
 		"test": "exit 0"
@@ -31,8 +31,11 @@
 	"dependencies": {},
 	"devDependencies": {
 		"browserify": "16.2.3",
+		"concat-cli": "4.0.0",
 		"http-server": "0.11.1",
+		"ncp": "2.0.0",
 		"npm-run-all": "4.1.5",
+		"replace-in-file": "3.4.3",
 		"rimraf": "2.6.3",
 		"tsify": "4.0.1",
 		"typescript": "3.3.3",
