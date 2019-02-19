@@ -35,7 +35,7 @@ async function detectWebpSupport(): Promise<boolean> {
 
 const relax = () => new Promise((resolve, reject) =>requestAnimationFrame(resolve))
 
-export default class WebpHero {
+export class WebpHero {
 	private readonly dwebp
 	private busy = false
 	private cache = {}

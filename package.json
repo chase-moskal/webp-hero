@@ -14,7 +14,7 @@
 		"wrap": "concat-cli -f source/wrapping.js.start.txt libwebpjs/dist/webp.js source/wrapping.js.end.txt -o dist/dwebp.big.js",
 		"minify": "uglifyjs -cm < dist/dwebp.big.js > dist/dwebp.js",
 		"compile": "tsc",
-		"bundle": "browserify -p [ tsify ] source/webp-hero.polyfill.ts > dist/webp-hero.polyfill.bundle.js",
+		"bundle": "browserify dist/webp-hero.bundle.js -o dist/webp-hero.bundle.js",
 		"test": "exit 0"
 	},
 	"repository": {
