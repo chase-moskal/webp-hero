@@ -1,20 +1,9 @@
 
 # webp-hero changelog
 
-### v0.0.0-dev.13 — 2019-02-18
+### v0.0.0-dev.13 — 2019-02-19
 
-- remove default export in favor of named export `WebpHero`
-
-	```js
-	// replace this:
-	import WebpHero from "webp-hero"
-
-	// with this:
-	import {WebpHero} from "webp-hero"
-	```
-
-- replace the polyfill bundle with a generic global bundle  
-
+- rename `dist/webp-hero.polyfill.bundle.js` to `dist/webp-hero.bundle.js` and require you to interact with it to activate the polyfill
 	```html
 	<!-- replace this: -->
 	<script src="webp-hero/dist/webp-hero.polyfill.bundle.js"></script>
@@ -22,9 +11,17 @@
 	<!-- with this: -->
 	<script src="webp-hero/dist/webp-hero.bundle.js"></script>
 	<script>
-		const webpHero = new WebpHero()
-		webpHero.polyfill()
+		const {WebpMachine} = webpHero
+		const webpMachine = new WebpMachine()
+		webpMachine.polyfillDocument()
 	</script>
 	```
+- replace all default exports with named exports
+- replace `WebpHero` class with `WebpMachine`
+- `WebpMachine` class method `polyfill` renamed to `polyfillDocument`
+- `WebpMachine` class method `polyfillImage` can polyfill a single img element
+- functions `detectWebpSupport` and `loadBinaryData` now available
+- update `libwebp` source to latest version
+- `libwebp/dist/webp.js` commonjs module is now built inside the docker container
 
 ### v0.0.0-dev.12 — 2018-08-10
