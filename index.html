@@ -1,16 +1,26 @@
 <!doctype html>
 <html>
 	<head>
+		<meta charset="utf-8"/>
 		<title>webp-hero</title>
 	</head>
 	<body>
-
 		<h1>webp-hero</h1>
 		<p>view source on <a href="https://github.com/chase-moskal/webp-hero">github</a></p>
 		<img alt="" src="images/dice.webp"/>
 		<img alt="" src="images/landscape.webp"/>
 		<img alt="" src="images/firebreather.webp"/>
 
-		<script src="dist/webp-hero.polyfill.bundle.js"></script>
+		<script src="dist/webp-hero.bundle.js"></script>
+		<script>
+			// you can add "?force" to the url to force webp conversion
+			const webpSupport = location.search.includes("force")
+				? Promise.resolve(false)
+				: undefined
+
+			const {WebpMachine} = webpHero
+			const webpMachine = new WebpMachine({webpSupport})
+			webpMachine.polyfillDocument()
+		</script>
 	</body>
 </html>

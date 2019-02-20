@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+cd "${0%/*}"
+docker build -t webphero .
+docker run --volume $PWD/dist:/dist -it --rm webphero

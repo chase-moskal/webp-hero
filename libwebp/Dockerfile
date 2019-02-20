@@ -1,4 +1,16 @@
 
+##
+## ==============================
+## :::: LIBWEBP DOCKER BUILD ::::
+## ==============================
+## - download and build google's libwebp from source
+## - libwebp emscripten build outputs "dist/webp.js"
+##
+
+##
+## ESTABLISH DEBIAN CONTAINER
+##
+
 FROM debian:stretch-slim
 RUN mkdir /work
 RUN apt-get update && apt-get install -y \
@@ -7,7 +19,7 @@ RUN apt-get update && apt-get install -y \
   libpng-dev libjpeg-dev
 
 ##
-## EMSCRIPTEN
+## DOWNLOAD AND INSTALL EMSCRIPTEN
 ##
 
 # download emscripten
@@ -20,48 +32,34 @@ RUN cd /work/emsdk-portable \
   && ./emsdk update \
   && ./emsdk install sdk-1.37.22-64bit \
   && ./emsdk activate sdk-1.37.22-64bit
+  # libwebp doesn't yet support emscripten sdk 1.38, usage of 1.37 is deliberate
 
 # verify emscripten
 RUN ["/bin/bash", "-c", "cd /work/emsdk-portable && source ./emsdk_env.sh && emcc --version"]
 
 ##
-## LIBWEBP
+## DOWNLOAD LIBWEBP SOURCE
 ##
 
 RUN mkdir /work/libwebp && cd /work/libwebp \
   && git clone --branch master https://github.com/webmproject/libwebp.git . \
-  && git checkout c2d04f3e
-
-# # compile cli via cmake
-# RUN cd /work/libwebp \
-#   && mkdir build \
-#   && cd build \
-#   && cmake -DWEBP_BUILD_CWEBP=ON -DWEBP_BUILD_DWEBP=ON ../ \
-#   && make \
-#   && make install
-
-# compile cli via autoconf
-# RUN cd /work/libwebp \
-#   && ./autogen.sh \
-#   && ./configure \
-#   && make \
-#   && make install \
-#   && ldconfig /usr/local/lib
+  && git checkout d9a662e1aad3e23a6c370e6691366f2d077d697c
 
 ##
-## ADD LOCAL FILES INTO WORK DIR
+## COPY LOCAL FILES INTO CONTAINER
 ##
 
 ADD . /work
 
 ##
-## LIBWEBP EMSCRIPTEN BUILD
+## RUN LIBWEBP EMSCRIPTEN BUILD
 ##
 
 # replace libwebp emscripten cmake instructions
 RUN rm -rf /work/libwebp/CMakeLists.txt \
   && cp /work/source/CMakeLists.txt /work/libwebp
 
+# run the webp js build
 RUN ["/bin/bash", "-c", "cd /work/emsdk-portable \
   && source ./emsdk_env.sh \
   && cd /work/libwebp/webp_js \

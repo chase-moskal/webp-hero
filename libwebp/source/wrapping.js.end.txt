@@ -4,4 +4,6 @@
 	this.setCanvas = function(canvas) { Module.canvas = canvas }
 }
 
-module.exports = Dwebp
+module.exports = {
+	Webp: Webp
+}

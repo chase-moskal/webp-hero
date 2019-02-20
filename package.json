@@ -2,26 +2,30 @@
 	"name": "webp-hero",
 	"version": "0.0.0-dev.12",
 	"description": "webp for web browsers",
-	"main": "dist/webp-hero",
-	"types": "dist/webp-hero.d.ts",
+	"main": "dist",
+	"types": "dist/index.d.ts",
 	"files": [
 		"dist"
 	],
 	"scripts": {
 		"start": "http-server",
-		"prepare": "run-s clean wrap minify compile bundle",
+		"prepare": "run-s clean barrel compile bundle",
 		"clean": "rimraf dist && mkdir dist",
-		"wrap": "cat source/wrapping.js.start.txt libwebpjs/dist/webp.js source/wrapping.js.end.txt > dist/dwebp.raw.js",
-		"minify": "uglifyjs -cm < dist/dwebp.raw.js > dist/dwebp.js && rimraf dist/dwebp.raw.js",
+		"barrel": "barrelsby --delete --directory source --exclude 'bundle.ts$'",
 		"compile": "tsc",
-		"bundle": "browserify -p [ tsify ] source/webp-hero.polyfill.ts > dist/webp-hero.polyfill.bundle.js",
+		"bundle": "browserify dist/webp-hero.bundle.js -o dist/webp-hero.bundle.js",
 		"test": "exit 0"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/chase-moskal/webp-hero.git"
 	},
-	"keywords": [],
+	"keywords": [
+		"webp",
+		"polyfill",
+		"webp-polyfill",
+		"image-conversion"
+	],
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"license": "ISC",
 	"bugs": {
@@ -30,12 +34,16 @@
 	"homepage": "https://github.com/chase-moskal/webp-hero#readme",
 	"dependencies": {},
 	"devDependencies": {
-		"browserify": "16.2.2",
+		"barrelsby": "1.0.2",
+		"browserify": "16.2.3",
+		"concat-cli": "4.0.0",
 		"http-server": "0.11.1",
-		"npm-run-all": "4.1.3",
-		"rimraf": "2.6.2",
-		"tsify": "4.0.0",
-		"typescript": "3.0.1",
-		"uglify-js": "3.4.7"
+		"ncp": "2.0.0",
+		"npm-run-all": "4.1.5",
+		"replace-in-file": "3.4.3",
+		"rimraf": "2.6.3",
+		"tsify": "4.0.1",
+		"typescript": "3.3.3",
+		"uglify-js": "3.4.9"
 	}
 }
