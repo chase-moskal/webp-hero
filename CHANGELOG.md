@@ -1,7 +1,7 @@
 
 # webp-hero changelog
 
-### v0.0.0-dev.13 — 2019-02-19
+### v0.0.0-dev.15 — 2019-02-19
 
 - rename `dist/webp-hero.polyfill.bundle.js` to `dist/webp-hero.bundle.js` and require you to interact with it to activate the polyfill
 	```html
