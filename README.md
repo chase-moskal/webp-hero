@@ -89,4 +89,4 @@ development on webp-hero
 	- google's libwebp project is built inside of a docker container
 	- libwebp build artifacts (in `libwebp/dist`) are checked into git, because it takes so long to build
 	- `sudo ./libwebp/build` — run the libwebp build (docker requires sudo)
-	- `sudo ./libwebp/build-debug` — useful to drop into the container to have a look around, does not any emit build artifacts
+	- `sudo ./libwebp/debug` — useful to drop into the container to have a look around, does not any emit build artifacts
