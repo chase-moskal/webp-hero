@@ -2,4 +2,4 @@
 
 cd "${0%/*}"
 docker build -t webphero .
-docker run -it --rm webphero
+docker run --volume $PWD/dist:/dist -it --rm webphero

@@ -42,11 +42,13 @@ RUN ["/bin/bash", "-c", "cd /work/emsdk-portable && source ./emsdk_env.sh && emc
 
 RUN mkdir /work/libwebp && cd /work/libwebp \
   && git clone --branch master https://github.com/webmproject/libwebp.git . \
-  && git checkout v1.0.2
+  && git checkout 6bcf8769809b17c4bef4d5b48b8095b629b5e4d3
 
 ##
 ## COPY LOCAL FILES INTO CONTAINER
 ##
+
+RUN ls ././././.
 
 ADD . /work
 

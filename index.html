@@ -14,10 +14,14 @@
 		<script src="dist/webp-hero.bundle.js"></script>
 		<script>
 			// you can add "?force" to the url to force webp conversion
-			const force = location.search.includes("force")
+			const webpSupport = location.search.includes("force")
+				? Promise.resolve(false)
+				: undefined
 
-			const webpHero = new WebpHero()
-			webpHero.polyfill({force})
+
+			const {WebpMachine} = webpHero
+			const webpMachine = new WebpMachine({webpSupport})
+			webpMachine.polyfillDocument()
 		</script>
 	</body>
 </html>

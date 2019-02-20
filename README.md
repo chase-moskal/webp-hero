@@ -4,6 +4,9 @@
 webp-hero
 =========
 
+- [libwebp](https://github.com/webmproject/libwebp/commit/d9a662e1aad3e23a6c370e6691366f2d077d697c) — *d9a662e* — 2019-02-18
+- [emscripten](https://github.com/emscripten-core/emscripten) — sdk v1.38.27
+
 webp image format browser polyfill
 ----------------------------------
 

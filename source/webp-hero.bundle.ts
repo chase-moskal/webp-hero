@@ -1,4 +1,4 @@
 
-import {WebpHero} from "./webp-hero"
+import * as webpHero from "."
 
-window["WebpHero"] = WebpHero
+window["webpHero"] = webpHero
