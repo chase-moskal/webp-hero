@@ -30,8 +30,8 @@ RUN cd /work \
 # run emscripten self installation
 RUN cd /work/emsdk-portable \
   && ./emsdk update \
-  && ./emsdk install sdk-1.38.27-64bit \
-  && ./emsdk activate sdk-1.38.27-64bit
+  && ./emsdk install sdk-1.37.22-64bit \
+  && ./emsdk activate sdk-1.37.22-64bit
 
 # verify emscripten
 RUN ["/bin/bash", "-c", "cd /work/emsdk-portable && source ./emsdk_env.sh && emcc --version"]
@@ -47,8 +47,6 @@ RUN mkdir /work/libwebp && cd /work/libwebp \
 ##
 ## COPY LOCAL FILES INTO CONTAINER
 ##
-
-RUN ls ././././.
 
 ADD . /work
 

@@ -1,9 +1,9 @@
 
 import {Webp} from "../libwebp/dist/webp"
 
-import {WebpHeroOptions} from "./interfaces"
 import {loadBinaryData} from "./load-binary-data"
 import {detectWebpSupport} from "./detect-webp-support"
+import {WebpHeroOptions, PolyfillDocumentOptions} from "./interfaces"
 
 const relax = () => new Promise(resolve => requestAnimationFrame(resolve))
 
@@ -58,9 +58,9 @@ export class WebpMachine {
 		}
 	}
 
-	async polyfillDocument({document = window.document}: {
-		document?: Document
-	} = {}): Promise<void> {
+	async polyfillDocument({
+		document = window.document
+	}: PolyfillDocumentOptions = {}): Promise<void> {
 		const webpSupport = await this.webpSupport
 		if (webpSupport) return null
 		for (const image of Array.from(document.querySelectorAll("img"))) {
