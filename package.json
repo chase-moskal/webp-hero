@@ -1,11 +1,13 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev.13",
+	"version": "0.0.0-dev.14",
 	"description": "webp for web browsers",
 	"main": "dist",
 	"types": "dist/index.d.ts",
 	"files": [
-		"dist"
+		"dist",
+		"libwebp/dist/webp.d.ts",
+		"libwebp/dist/webp.js"
 	],
 	"scripts": {
 		"start": "http-server",
