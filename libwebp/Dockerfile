@@ -32,6 +32,7 @@ RUN cd /work/emsdk-portable \
   && ./emsdk update \
   && ./emsdk install sdk-1.37.22-64bit \
   && ./emsdk activate sdk-1.37.22-64bit
+  # libwebp doesn't yet support emscripten sdk 1.38, usage of 1.37 is deliberate
 
 # verify emscripten
 RUN ["/bin/bash", "-c", "cd /work/emsdk-portable && source ./emsdk_env.sh && emcc --version"]
@@ -42,7 +43,7 @@ RUN ["/bin/bash", "-c", "cd /work/emsdk-portable && source ./emsdk_env.sh && emc
 
 RUN mkdir /work/libwebp && cd /work/libwebp \
   && git clone --branch master https://github.com/webmproject/libwebp.git . \
-  && git checkout 6bcf8769809b17c4bef4d5b48b8095b629b5e4d3
+  && git checkout d9a662e1aad3e23a6c370e6691366f2d077d697c
 
 ##
 ## COPY LOCAL FILES INTO CONTAINER

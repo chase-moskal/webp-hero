@@ -2,8 +2,8 @@
 	"name": "webp-hero",
 	"version": "0.0.0-dev.12",
 	"description": "webp for web browsers",
-	"main": "dist/webp-hero",
-	"types": "dist/webp-hero.d.ts",
+	"main": "dist",
+	"types": "dist/index.d.ts",
 	"files": [
 		"dist"
 	],
@@ -20,7 +20,12 @@
 		"type": "git",
 		"url": "git+https://github.com/chase-moskal/webp-hero.git"
 	},
-	"keywords": [],
+	"keywords": [
+		"webp",
+		"polyfill",
+		"webp-polyfill",
+		"image-conversion"
+	],
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"license": "ISC",
 	"bugs": {

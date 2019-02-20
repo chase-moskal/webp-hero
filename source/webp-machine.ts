@@ -13,6 +13,9 @@ export class WebpMachine {
 	private busy = false
 	private cache: {[key: string]: string} = {}
 
+	/**
+	 * Instance a webp machine
+	 */
 	constructor({
 		webp = new Webp(),
 		webpSupport = detectWebpSupport()
@@ -21,6 +24,9 @@ export class WebpMachine {
 		this.webpSupport = webpSupport
 	}
 
+	/**
+	 * Decode raw webp data into a png data url
+	 */
 	async decode(webpData: Uint8Array): Promise<string> {
 		if (this.busy) throw new Error("cannot decode when dwebp is already busy")
 		this.busy = true
@@ -39,6 +45,9 @@ export class WebpMachine {
 		}
 	}
 
+	/**
+	 * Polyfill the webp format on the given <img> element
+	 */
 	async polyfillImage(image: HTMLImageElement): Promise<void> {
 		const webpSupport = await this.webpSupport
 		const {src} = image
@@ -58,6 +67,9 @@ export class WebpMachine {
 		}
 	}
 
+	/**
+	 * Run the webp format polyfill on the entire web page
+	 */
 	async polyfillDocument({
 		document = window.document
 	}: PolyfillDocumentOptions = {}): Promise<void> {
