@@ -4,30 +4,27 @@
 webp-hero
 =========
 
-## live demo
+browser polyfill for the webp image format
+------------------------------------------
+
+- webp images come alive! in firefox, safari, edge, internet explorer, and chrome
+- webp-hero actually runs google's `libwebp` decoder in the browser — it converts webp images to png's on-the-fly
+- webp-hero's polyfill functionality renders decoded image data to a hidden canvas, and converts that to a png data url which is then displayed to the user
+
+### live demo
 
 - [webp-hero/](https://chasemoskal.com/webp-hero/?force) — webp-hero polyfill operating normally (does nothing if your browser supports webp)
 - [webp-hero/?force](https://chasemoskal.com/webp-hero/?force) — webp conversion to png is forced (even if your browser supports webp)
 
-## freshness
+### freshness
 
 - [libwebp](https://github.com/webmproject/libwebp/commit/d9a662e1aad3e23a6c370e6691366f2d077d697c) — *d9a662e* — 2019-02-18
 - [emscripten](https://github.com/emscripten-core/emscripten) — sdk-1.37.22-64bit
-
-webp image format browser polyfill
-----------------------------------
-
-- webp images come alive! in firefox, safari, edge, internet explorer, and chrome
-
-- webp-hero actually runs google's `libwebp` decoder in the browser — it converts webp images to png's on-the-fly
-
-- webp-hero's polyfill function renders decoded image data to a hidden canvas, and converts that to a png data url which is then displayed to the user
 
 how to use webp-hero's polyfill on your page
 --------------------------------------------
 
 - webp-hero contains a class called `WebpMachine` which has a `polyfillDocument` method which converts webp images into png's
-
 - currently, the polyfill only works on img tags (not yet on css images)
 
 ### use webp-hero in a simple html page
