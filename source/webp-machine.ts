@@ -28,7 +28,7 @@ export class WebpMachine {
 	 * Decode raw webp data into a png data url
 	 */
 	async decode(webpData: Uint8Array): Promise<string> {
-		if (this.busy) throw new Error("cannot decode when dwebp is already busy")
+		if (this.busy) throw new Error("can only decode webp-images one-at-a-time")
 		this.busy = true
 
 		try {
