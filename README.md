@@ -67,9 +67,10 @@ direct usage of webp commonjs module
 ------------------------------------
 
 - the webp-machine has polyfilling and caching logic, but you can use google's webp functionality more directly via `webp-hero/libwebp/dist/webp.js`
-	- this is compiled from google's `libwebp` emscripten build, and then wrapped in a common-js module
-	- contains minimal functionality for rendering webp data to a canvas
-	- the typescript declaration file describes the usage signature [webp.d.ts](./libwebp/source/webp.d.ts)
+	- this is compiled from google's `libwebp` emscripten build inside a docker container
+	- it is then wrapped in a common-js module
+	- it contains minimal functionality for rendering webp data to a canvas
+	- the typescript declaration file describes the usage signature: [webp.d.ts](./libwebp/source/webp.d.ts)
 
 development on webp-hero
 ------------------------
