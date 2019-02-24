@@ -28,7 +28,7 @@ export class WebpMachine {
 	 * Decode raw webp data into a png data url
 	 */
 	async decode(webpData: Uint8Array): Promise<string> {
-		if (this.busy) throw new Error("cannot decode when dwebp is already busy")
+		if (this.busy) throw new Error("can only decode webp-images one-at-a-time")
 		this.busy = true
 
 		try {
@@ -49,9 +49,9 @@ export class WebpMachine {
 	 * Polyfill the webp format on the given <img> element
 	 */
 	async polyfillImage(image: HTMLImageElement): Promise<void> {
-		const webpSupport = await this.webpSupport
+		if (await this.webpSupport) return
 		const {src} = image
-		if (!webpSupport && /\.webp$/i.test(src)) {
+		if (/\.webp$/i.test(src)) {
 			if (this.cache[src]) {
 				image.src = this.cache[src]
 			}
@@ -73,8 +73,7 @@ export class WebpMachine {
 	async polyfillDocument({
 		document = window.document
 	}: PolyfillDocumentOptions = {}): Promise<void> {
-		const webpSupport = await this.webpSupport
-		if (webpSupport) return null
+		if (await this.webpSupport) return null
 		for (const image of Array.from(document.querySelectorAll("img"))) {
 			await this.polyfillImage(image)
 		}
