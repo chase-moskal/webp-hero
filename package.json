@@ -16,7 +16,7 @@
 		"clean": "rimraf dist && mkdirp dist",
 		"barrel": "barrelsby --delete --directory source --exclude 'bundle.ts$'",
 		"compile": "tsc",
-		"bundle": "browserify dist/webp-hero.bundle.js -o dist/webp-hero.bundle.js",
+		"bundle": "browserify dist/webp-hero.bundle.js -p tinyify -o dist/webp-hero.bundle.js",
 		"test": "exit 0"
 	},
 	"repository": {
@@ -43,6 +43,7 @@
 		"mkdirp": "0.5.1",
 		"npm-run-all": "4.1.5",
 		"rimraf": "2.6.3",
+		"tinyify": "2.5.0",
 		"typescript": "3.3.3333"
 	}
 }
