@@ -39,8 +39,7 @@ how to use webp-hero's polyfill on your page
 
 	```html
 	<script>
-		const {WebpMachine} = webpHero
-		const webpMachine = new WebpMachine()
+		const webpMachine = new webphero.WebpMachine()
 		webpMachine.polyfillDocument()
 	</script>
 	```
