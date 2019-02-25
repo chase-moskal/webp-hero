@@ -1,7 +1,7 @@
 
 import {Webp} from "../libwebp/dist/webp"
 
-export interface WebpHeroOptions {
+export interface WebpMachineOptions {
 	webp?: Webp
 	webpSupport?: Promise<boolean>
 }

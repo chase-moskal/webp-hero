@@ -3,23 +3,25 @@ import {Webp} from "../libwebp/dist/webp"
 
 import {loadBinaryData} from "./load-binary-data"
 import {detectWebpSupport} from "./detect-webp-support"
-import {WebpHeroOptions, PolyfillDocumentOptions} from "./interfaces"
+import {WebpMachineOptions, PolyfillDocumentOptions} from "./interfaces"
 
 const relax = () => new Promise(resolve => requestAnimationFrame(resolve))
 
+/**
+ * Webp Machine
+ * - decode and polyfill webp images
+ * - can only decode images one-at-a-time (otherwise will throw busy error)
+ */
 export class WebpMachine {
 	private readonly webp: Webp
 	private readonly webpSupport: Promise<boolean>
 	private busy = false
 	private cache: {[key: string]: string} = {}
 
-	/**
-	 * Instance a webp machine
-	 */
 	constructor({
 		webp = new Webp(),
 		webpSupport = detectWebpSupport()
-	}: WebpHeroOptions = {}) {
+	}: WebpMachineOptions = {}) {
 		this.webp = webp
 		this.webpSupport = webpSupport
 	}
@@ -28,7 +30,7 @@ export class WebpMachine {
 	 * Decode raw webp data into a png data url
 	 */
 	async decode(webpData: Uint8Array): Promise<string> {
-		if (this.busy) throw new Error("can only decode webp-images one-at-a-time")
+		if (this.busy) throw new Error("webp-machine decode error: busy")
 		this.busy = true
 
 		try {
@@ -41,6 +43,7 @@ export class WebpMachine {
 		}
 		catch (error) {
 			this.busy = false
+			error.message = `webp-machine decode error: ${error.message}`
 			throw error
 		}
 	}
@@ -61,14 +64,14 @@ export class WebpMachine {
 				image.src = this.cache[src] = pngData
 			}
 			catch (error) {
-				console.error(`webp-machine failed to polyfill image: "${src}"`, error)
+				error.message = `webp-machine polyfillImage failed: ${error.message}`
 				throw error
 			}
 		}
 	}
 
 	/**
-	 * Run the webp format polyfill on the entire web page
+	 * Polyfill webp format on the entire web page
 	 */
 	async polyfillDocument({
 		document = window.document
