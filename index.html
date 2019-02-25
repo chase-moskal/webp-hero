@@ -13,14 +13,18 @@
 
 		<script src="dist/webp-hero.bundle.js"></script>
 		<script>
-			// you can add "?force" to the url to force webp conversion
+
+			// for this demo, you can add "?force" to the url to force webp conversion
 			const webpSupport = location.search.includes("force")
 				? Promise.resolve(false)
 				: undefined
+			
+			// instance the webp machine
+			const webpMachine = new webpHero.WebpMachine({webpSupport})
 
-			const {WebpMachine} = webpHero
-			const webpMachine = new WebpMachine({webpSupport})
+			// polyfill this entire document's webp images
 			webpMachine.polyfillDocument()
+
 		</script>
 	</body>
 </html>

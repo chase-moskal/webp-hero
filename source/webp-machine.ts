@@ -3,7 +3,7 @@ import {Webp} from "../libwebp/dist/webp"
 
 import {loadBinaryData} from "./load-binary-data"
 import {detectWebpSupport} from "./detect-webp-support"
-import {WebpHeroOptions, PolyfillDocumentOptions} from "./interfaces"
+import {WebpMachineOptions, PolyfillDocumentOptions} from "./interfaces"
 
 const relax = () => new Promise(resolve => requestAnimationFrame(resolve))
 
@@ -21,7 +21,7 @@ export class WebpMachine {
 	constructor({
 		webp = new Webp(),
 		webpSupport = detectWebpSupport()
-	}: WebpHeroOptions = {}) {
+	}: WebpMachineOptions = {}) {
 		this.webp = webp
 		this.webpSupport = webpSupport
 	}
