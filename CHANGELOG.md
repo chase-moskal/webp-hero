@@ -1,6 +1,18 @@
 
 # webp-hero changelog
 
+### v0.0.0-dev.17 — 2019-02-25
+
+breaking changes:
+
+- fix interface name from `WebpHeroOptions` to `WebpMachineOptions`
+
+other changes:
+
+- update readme and packages
+- optimize `webp-herp.bundle.js` via tinyify
+- improve error handling by not logging anything to console
+
 ### v0.0.0-dev.15 — 2019-02-19
 
 - rename `dist/webp-hero.polyfill.bundle.js` to `dist/webp-hero.bundle.js` and require you to interact with it to activate the polyfill
@@ -16,6 +28,7 @@
 		webpMachine.polyfillDocument()
 	</script>
 	```
+- rename `dwebp` to just `webp`
 - replace all default exports with named exports
 - replace `WebpHero` class with `WebpMachine`
 - `WebpMachine` class method `polyfill` renamed to `polyfillDocument`
