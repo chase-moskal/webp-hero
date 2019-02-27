@@ -83,7 +83,7 @@ development on webp-hero
 - **development**
 	- `npm install` — install dependencies and run build
 		- run typescript build
-		- generates `webp-hero/dist/webo-hero.bundle.js`
+		- generates `webp-hero/dist/webp-hero.bundle.js`
 	- `npm start` — start http server
 		- visit http://localhost:8080/ to see the webp-hero demo
 		- visit http://localhost:8080/libwebp/dist/google/ to see google's demo
