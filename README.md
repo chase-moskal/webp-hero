@@ -29,17 +29,18 @@ how to use webp-hero's polyfill on your page
 
 ### use webp-hero in a simple html page
 
-1. load the webp-hero bundle onto the page
+1. load the webp-hero bundle onto the page (you may want the polyfills too)
 
 	```html
-	<script src="webp-hero.bundle.js"></script>
+	<script src="webp-hero/dist/polyfills.js"></script>
+	<script src="webp-hero/dist/webp-hero.bundle.js"></script>
 	```
 
 2. run the webp-hero polyfill function
 
 	```html
 	<script>
-		const webpMachine = new webphero.WebpMachine()
+		var webpMachine = new webphero.WebpMachine()
 		webpMachine.polyfillDocument()
 	</script>
 	```
