@@ -1,19 +1,23 @@
 
 # webp-hero changelog
 
-### v0.0.0-dev.17 — 2019-02-25
+## v0.0.0-dev.18 — 2019-02-26
+
+non-breaking changes:
+- added support for ie11 via optional `dist/polyfills.js`
+- update readme examples to support ie11
+
+## v0.0.0-dev.17 — 2019-02-25
 
 breaking changes:
-
 - fix interface name from `WebpHeroOptions` to `WebpMachineOptions`
 
 other changes:
-
 - update readme and packages
 - optimize `webp-herp.bundle.js` via tinyify
 - improve error handling by not logging anything to console
 
-### v0.0.0-dev.15 — 2019-02-19
+## v0.0.0-dev.15 — 2019-02-19
 
 - rename `dist/webp-hero.polyfill.bundle.js` to `dist/webp-hero.bundle.js` and require you to interact with it to activate the polyfill
 	```html
@@ -37,4 +41,4 @@ other changes:
 - update `libwebp` source to latest version
 - `libwebp/dist/webp.js` commonjs module is now built inside the docker container
 
-### v0.0.0-dev.12 — 2018-08-10
+## v0.0.0-dev.12 — 2018-08-10
