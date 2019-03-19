@@ -1,6 +1,23 @@
 
 # webp-hero changelog
 
+## v0.0.0-dev.19 — 2019-03-18
+
+introducing proper es-modules, just to be future-proof and cool
+
+however the browserify bundle generated via the commonjs build will be the most compatible with the 'ol ie11
+
+breaking:
+- `dist/` now contains a new es-module build
+- `dist-cjs/` now contains the old commonjs equivalent
+- update package.json `main` field to point at `dist-cjs`, also typings updated
+- move `dist/webp-hero.bundle.js` into `dist-cjs/`
+- move `dist/polyfills.js` into `dist-cjs/`
+
+non-breaking:
+- update readme with es-module usage example
+- add `esm.html` demo page example using es-modules instead of bundle
+
 ## v0.0.0-dev.18 — 2019-02-26
 
 non-breaking changes:
