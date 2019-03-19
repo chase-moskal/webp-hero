@@ -11,16 +11,16 @@
 		<img alt="" src="images/landscape.webp"/>
 		<img alt="" src="images/firebreather.webp"/>
 
-		<script src="dist-cjs/polyfills.js"></script>
-		<script src="dist-cjs/webp-hero.bundle.js"></script>
-		<script>
+		<script type="module">
+			import {WebpMachine} from "./dist/webp-machine.js"
+
 			// for this demo, you can add "?force" to the url to force webp conversion
 			var webpSupport = location.search.indexOf("force") !== -1
 				? Promise.resolve(false)
 				: undefined
 
 			// instance the webp machine
-			var webpMachine = new webpHero.WebpMachine({webpSupport: webpSupport})
+			var webpMachine = new WebpMachine({webpSupport: webpSupport})
 
 			// polyfill this entire document's webp images
 			webpMachine.polyfillDocument()

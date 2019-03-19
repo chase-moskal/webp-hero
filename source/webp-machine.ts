@@ -1,9 +1,9 @@
 
-import {Webp} from "../libwebp/dist/webp"
+import {Webp} from "../libwebp/dist/webp.js"
 
-import {loadBinaryData} from "./load-binary-data"
-import {detectWebpSupport} from "./detect-webp-support"
-import {WebpMachineOptions, PolyfillDocumentOptions} from "./interfaces"
+import {loadBinaryData} from "./load-binary-data.js"
+import {detectWebpSupport} from "./detect-webp-support.js"
+import {WebpMachineOptions, PolyfillDocumentOptions} from "./interfaces.js"
 
 const relax = () => new Promise(resolve => requestAnimationFrame(resolve))
 

@@ -1,23 +1,27 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev.18",
-	"description": "webp for web browsers",
-	"main": "dist",
-	"types": "dist/index.d.ts",
+	"version": "0.0.0-dev.19",
+	"description": "webp image format polyfill for browsers",
+	"main": "dist-cjs",
+	"types": "dist-cjs/index.d.ts",
 	"files": [
 		"dist",
+		"dist-cjs",
+		"libwebp/dist/webp.js",
 		"libwebp/dist/webp.d.ts",
-		"libwebp/dist/webp.js"
+		"libwebp/dist/webp.cjs.js"
 	],
 	"scripts": {
 		"start": "http-server",
 		"prepare": "run-s build test",
 		"build": "run-s clean barrel compile && run-p bundle polyfills",
-		"clean": "rimraf dist && mkdirp dist",
+		"clean": "rimraf dist dist-cjs && mkdirp dist dist-cjs",
 		"barrel": "barrelsby --delete --directory source --exclude 'bundle.ts$'",
-		"compile": "tsc",
-		"bundle": "browserify dist/webp-hero.bundle.js -p tinyify -o dist/webp-hero.bundle.js",
-		"polyfills": "concat-cli -f node_modules/es6-promise/dist/es6-promise.auto.min.js -f node_modules/mdn-polyfills/Array.from.js -o dist/polyfills.js",
+		"compile": "run-p compile-esm compile-cjs",
+		"compile-esm": "tsc",
+		"compile-cjs": "tsc --outDir dist-cjs --target es5 --module commonjs && replace 'libwebp\\/dist\\/webp\\.js' 'libwebp/dist/webp.cjs.js' dist-cjs/webp-machine.js",
+		"bundle": "browserify dist-cjs/webp-hero.bundle.js -p tinyify -o dist-cjs/webp-hero.bundle.js",
+		"polyfills": "concat-cli -f node_modules/es6-promise/dist/es6-promise.auto.min.js -f node_modules/mdn-polyfills/Array.from.js -o dist-cjs/polyfills.js",
 		"test": "exit 0"
 	},
 	"repository": {
@@ -47,6 +51,7 @@
 		"mdn-polyfills": "5.16.0",
 		"mkdirp": "0.5.1",
 		"npm-run-all": "4.1.5",
+		"replace": "1.1.0",
 		"rimraf": "2.6.3",
 		"tinyify": "2.5.0",
 		"typescript": "3.3.3333"

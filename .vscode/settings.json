@@ -7,10 +7,15 @@
 	"files.insertFinalNewline": true,
 
 	"files.exclude": {
-		"dist": false,
+		"*.log*": true,
 		"coverage": true,
-		"node_modules": true,
-		"*.log*": true
+		"node_modules": true
+	},
+
+	"search.exclude": {
+		"dist": true,
+		"dist-cjs": true,
+		"libwebp/dist": true
 	},
 
 	"typescript.tsdk": "node_modules/typescript/lib/"

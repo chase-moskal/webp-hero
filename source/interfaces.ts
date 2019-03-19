@@ -1,5 +1,5 @@
 
-import {Webp} from "../libwebp/dist/webp"
+import {Webp} from "../libwebp/dist/webp.js"
 
 export interface WebpMachineOptions {
 	webp?: Webp

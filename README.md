@@ -26,17 +26,24 @@ how to use webp-hero's polyfill on your page
 
 - webp-hero contains a class called `WebpMachine` which has a `polyfillDocument` method which converts webp images into png's
 - currently, the polyfill only works on img tags (not yet on css images)
+- es modules in `dist/`, and common-js modules in `dist-cjs/`
+- `dist-cjs/polyfills.js` is a collection of polyfills that restores ie11 support
 
-### use webp-hero in a simple html page
+### use webp-hero's bundle with the polyfills
 
-1. load the webp-hero bundle onto the page (you may want the polyfills too)
+this technique works nicely for older browsers
+
+include the bundle via a script tag, and it will install `webpHero` onto
+the global `window` object for you to use
+
+1. load the polyfills and the webp-hero bundle globally via script tags
 
 	```html
-	<script src="webp-hero/dist/polyfills.js"></script>
-	<script src="webp-hero/dist/webp-hero.bundle.js"></script>
+	<script src="webp-hero/dist-cjs/polyfills.js"></script>
+	<script src="webp-hero/dist-cjs/webp-hero.bundle.js"></script>
 	```
 
-2. run the webp-hero polyfill function
+2. run the webp-hero polyfill function on the document
 
 	```html
 	<script>
@@ -45,7 +52,12 @@ how to use webp-hero's polyfill on your page
 	</script>
 	```
 
-### use webp-hero in a commonjs application
+### use webp-hero's commonjs modules in your application
+
+you'll be familiar with this technique if you're producing your own application
+bundles via browserify or webpack
+
+you might want to include your own polyfills or use `webp-hero/dist-cjs/polyfills.js` if you want to support ie11
 
 1. install the webp-hero npm package
 
@@ -59,6 +71,24 @@ how to use webp-hero's polyfill on your page
 	webpMachine.polyfillDocument()
 	```
 
+### use webp-hero's native es-modules, like in the future
+
+if you're from the future, you'll probably want to use proper modules, either natively in the browser, or perhaps with optimization via rollup
+
+this won't work in older browsers, but is great for bringing webp-support to firefox, edge, and safari
+
+here's how you can use webp-hero like in the future, but today
+
+1. use webp-hero on your page in one script tag
+
+	```html
+	<script type="module">
+		import {WebpMachine} from "https://unpkg.com/webp-hero@0.0.0-dev.19/dist/webp-machine.js"
+		const webpMachine = new WebpMachine()
+		webpMachine.polyfillDocument()
+	</script>
+	```
+
 ### advanced usage
 
 - the webp-machine class also has a `polyfillImage` and also a `decode` method if you want more fine-grained control (see [webp-machine.ts](./source/webp-machine.ts) source for more info)
@@ -68,7 +98,7 @@ direct usage of webp commonjs module
 
 - the webp-machine has polyfilling and caching logic, but you can use google's webp functionality more directly via `webp-hero/libwebp/dist/webp.js`
 	- this is compiled from google's `libwebp` emscripten build inside a docker container
-	- it is then wrapped in a common-js module
+	- it is then wrapped in an es-module (`webp.js`) and also a common-js module (`webp.cjs.js`)
 	- it contains minimal functionality for rendering webp data to a canvas
 	- the typescript declaration file describes the usage signature: [webp.d.ts](./libwebp/source/webp.d.ts)
 
@@ -83,7 +113,7 @@ development on webp-hero
 - **development**
 	- `npm install` — install dependencies and run build
 		- run typescript build
-		- generates `webp-hero/dist/webp-hero.bundle.js`
+		- generates `webp-hero/dist/` and `webp-hero/dist-cjs/`
 	- `npm start` — start http server
 		- visit http://localhost:8080/ to see the webp-hero demo
 		- visit http://localhost:8080/libwebp/dist/google/ to see google's demo

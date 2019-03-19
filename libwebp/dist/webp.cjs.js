@@ -24,4 +24,6 @@ var lb=[Qh,vg,wg,Cg,kd,od,ud,td,md,ld,vd,Qh,Qh,Qh,Qh,Qh];var mb=[Rh,fe,ge,he,fc,
 	this.setCanvas = function(canvas) { Module.canvas = canvas }
 }
 
-export {Webp}
+module.exports = {
+	Webp: Webp
+}
