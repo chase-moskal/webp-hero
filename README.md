@@ -7,7 +7,7 @@ webp-hero
 browser polyfill for the webp image format
 ------------------------------------------
 
-- webp images come alive! in firefox, safari, edge, internet explorer, and chrome
+- webp images come alive, even in safari and ie11! (firefox and edge now support webp)
 - webp-hero actually runs google's `libwebp` decoder in the browser — it converts webp images to png's on-the-fly
 - webp-hero's polyfill functionality renders decoded image data to a hidden canvas, and converts that to a png data url which is then displayed to the user
 
