@@ -57,6 +57,7 @@ export class WebpMachine {
 		if (/\.webp$/i.test(src)) {
 			if (this.cache[src]) {
 				image.src = this.cache[src]
+				return
 			}
 			try {
 				const webpData = await loadBinaryData(src)
