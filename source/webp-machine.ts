@@ -1,11 +1,12 @@
 
 import {Webp} from "../libwebp/dist/webp.js"
-
 import {loadBinaryData} from "./load-binary-data.js"
 import {detectWebpSupport} from "./detect-webp-support.js"
 import {WebpMachineOptions, PolyfillDocumentOptions} from "./interfaces.js"
 
 const relax = () => new Promise(resolve => requestAnimationFrame(resolve))
+
+export class WebpMachineError extends Error {}
 
 /**
  * Webp Machine
@@ -30,7 +31,7 @@ export class WebpMachine {
 	 * Decode raw webp data into a png data url
 	 */
 	async decode(webpData: Uint8Array): Promise<string> {
-		if (this.busy) throw new Error("webp-machine decode error: busy")
+		if (this.busy) throw new WebpMachineError("cannot decode when already busy")
 		this.busy = true
 
 		try {
@@ -43,7 +44,8 @@ export class WebpMachine {
 		}
 		catch (error) {
 			this.busy = false
-			error.message = `webp-machine decode error: ${error.message}`
+			error.name = WebpMachineError.name
+			error.message = `failed to decode webp image: ${error.message}`
 			throw error
 		}
 	}
@@ -65,7 +67,8 @@ export class WebpMachine {
 				image.src = this.cache[src] = pngData
 			}
 			catch (error) {
-				error.message = `webp-machine polyfillImage failed: ${error.message}`
+				error.name = WebpMachineError.name
+				error.message = `failed to polyfill image "${src}": ${error.message}`
 				throw error
 			}
 		}
@@ -79,7 +82,14 @@ export class WebpMachine {
 	}: PolyfillDocumentOptions = {}): Promise<void> {
 		if (await this.webpSupport) return null
 		for (const image of Array.from(document.querySelectorAll("img"))) {
-			await this.polyfillImage(image)
+			try {
+				await this.polyfillImage(image)
+			}
+			catch (error) {
+				error.name = WebpMachineError.name
+				error.message = `webp image polyfill failed for url "${image.src}": ${error}`
+				throw error
+			}
 		}
 	}
 }
