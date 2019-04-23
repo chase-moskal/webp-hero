@@ -1,6 +1,12 @@
 
 # webp-hero changelog
 
+## v0.0.0-dev.20 — 2019-04-23
+
+non-breaking changes:
+- fix error handling [(thanks @Drummi42 for issue #15)](https://github.com/chase-moskal/webp-hero/issues/15)
+- fix webp-machine caching [(thanks @bake for pr #14)](https://github.com/chase-moskal/webp-hero/pull/14)
+
 ## v0.0.0-dev.19 — 2019-03-18
 
 introducing proper es-modules, just to be future-proof and cool
