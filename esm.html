@@ -14,16 +14,22 @@
 		<script type="module">
 			import {WebpMachine} from "./dist/webp-machine.js"
 
-			// for this demo, you can add "?force" to the url to force webp conversion
-			var webpSupport = location.search.indexOf("force") !== -1
-				? Promise.resolve(false)
-				: undefined
+			async function main() {
 
-			// instance the webp machine
-			var webpMachine = new WebpMachine({webpSupport: webpSupport})
+				// for this demo, you can add "?force" to the url to force webp conversion
+				const webpSupport = location.search.indexOf("force") !== -1
+					? Promise.resolve(false)
+					: undefined
+	
+				// instance the webp machine
+				const webpMachine = new WebpMachine({webpSupport})
+	
+				// polyfill this entire document's webp images
+				await webpMachine.polyfillDocument()
+			}
 
-			// polyfill this entire document's webp images
-			webpMachine.polyfillDocument()
+			main()
+				.catch(error => console.error("top level error:", error))
 		</script>
 	</body>
 </html>
