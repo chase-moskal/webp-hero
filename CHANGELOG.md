@@ -1,6 +1,14 @@
 
 # webp-hero changelog
 
+## v0.0.0-dev.21 — 2019-04-28
+
+non-breaking changes:
+- upgrade to [libwebp 1326988](https://github.com/webmproject/libwebp/commit/1326988d1091202be426aba07d0061b6759862ff) — 2019-04-18
+- upgrade to [emscripten 1.38.30](https://github.com/emscripten-core/emscripten/releases/tag/1.38.30) — 2019-03-21
+- upgrade to [typescript 3.4.5](https://github.com/Microsoft/TypeScript/releases/tag/v3.4.5)
+- add package.json "module" field
+
 ## v0.0.0-dev.20 — 2019-04-23
 
 non-breaking changes:

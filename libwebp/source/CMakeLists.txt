@@ -545,12 +545,12 @@ if(WEBP_BUILD_WEBP_JS)
   set_target_properties(
     webp_js
     PROPERTIES LINK_FLAGS
-               "-s EXPORTED_FUNCTIONS='[\"_WebpToSDL\"]' -s INVOKE_RUN=0 -s TOTAL_MEMORY=67108864 -s ALLOW_MEMORY_GROWTH=1 --memory-init-file 0 \
+               "-s ENVIRONMENT=\"'web'\" -s WASM=0 -s LEGACY_VM_SUPPORT=1 -s EXPORTED_FUNCTIONS='[\"_WebpToSDL\"]' -s INVOKE_RUN=0 -s TOTAL_MEMORY=67108864 -s ALLOW_MEMORY_GROWTH=1 --memory-init-file 0 \
        -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"cwrap\"]'")
   set_target_properties(webp_js PROPERTIES OUTPUT_NAME webp)
   target_compile_definitions(webp_js PUBLIC EMSCRIPTEN WEBP_HAVE_SDL)
 
-  # WASM version
+  # # WASM version
   # add_executable(webp_wasm ${CMAKE_CURRENT_SOURCE_DIR}/extras/webp_to_sdl.c)
   # target_link_libraries(webp_wasm webpdecoder SDL)
   # target_include_directories(webp_wasm PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
@@ -560,7 +560,7 @@ if(WEBP_BUILD_WEBP_JS)
   #      -s EXPORTED_FUNCTIONS='[\"_WebpToSDL\"]' -s INVOKE_RUN=0 \
   #      -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"cwrap\"]'")
   # target_compile_definitions(webp_wasm PUBLIC EMSCRIPTEN WEBP_HAVE_SDL)
-# 
+
   # target_compile_definitions(webpdspdecode PUBLIC EMSCRIPTEN)
 endif()
 

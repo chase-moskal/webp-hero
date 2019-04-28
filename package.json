@@ -1,8 +1,9 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev.20",
+	"version": "0.0.0-dev.21",
 	"description": "webp image format polyfill for browsers",
-	"main": "dist-cjs",
+	"main": "dist-cjs/index.js",
+	"module": "dist/index.js",
 	"types": "dist-cjs/index.d.ts",
 	"files": [
 		"dist",
@@ -54,6 +55,6 @@
 		"replace": "1.1.0",
 		"rimraf": "2.6.3",
 		"tinyify": "2.5.0",
-		"typescript": "3.3.3333"
+		"typescript": "3.4.5"
 	}
 }

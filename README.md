@@ -18,8 +18,8 @@ browser polyfill for the webp image format
 
 ### freshness
 
-- [libwebp](https://github.com/webmproject/libwebp/commit/d9a662e1aad3e23a6c370e6691366f2d077d697c) — *d9a662e* — 2019-02-18
-- [emscripten](https://github.com/emscripten-core/emscripten) — sdk-1.37.22-64bit
+- [libwebp 1326988](https://github.com/webmproject/libwebp/commit/1326988d1091202be426aba07d0061b6759862ff) — 2019-04-18
+- [emscripten 1.38.30](https://github.com/emscripten-core/emscripten/releases/tag/1.38.30) — 2019-03-21
 
 how to use webp-hero's polyfill on your page
 --------------------------------------------
@@ -83,7 +83,7 @@ here's how you can use webp-hero like in the future, but today
 
 	```html
 	<script type="module">
-		import {WebpMachine} from "https://unpkg.com/webp-hero@0.0.0-dev.19/dist/webp-machine.js"
+		import {WebpMachine} from "https://unpkg.com/webp-hero@0.0.0-dev.21/dist/webp-machine.js"
 		const webpMachine = new WebpMachine()
 		webpMachine.polyfillDocument()
 	</script>
