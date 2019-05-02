@@ -28,6 +28,7 @@ how to use webp-hero's polyfill on your page
 - currently, the polyfill only works on img tags (not yet on css images)
 - es modules in `dist/`, and common-js modules in `dist-cjs/`
 - `dist-cjs/polyfills.js` is a collection of polyfills that restores ie11 support
+- `dist-cjs/webp-hero.bundle.js` is a bundle that writes `webpHero` as a global
 
 ### use webp-hero's bundle with the polyfills
 
@@ -39,15 +40,15 @@ the global `window` object for you to use
 1. load the polyfills and the webp-hero bundle globally via script tags
 
 	```html
-	<script src="webp-hero/dist-cjs/polyfills.js"></script>
-	<script src="webp-hero/dist-cjs/webp-hero.bundle.js"></script>
+	<script src="https://unpkg.com/webp-hero@0.0.0-dev.21/dist-cjs/polyfills.js"></script>
+	<script src="https://unpkg.com/webp-hero@0.0.0-dev.21/dist-cjs/webp-hero.bundle.js"></script>
 	```
 
 2. run the webp-hero polyfill function on the document
 
 	```html
 	<script>
-		var webpMachine = new webphero.WebpMachine()
+		var webpMachine = new webpHero.WebpMachine()
 		webpMachine.polyfillDocument()
 	</script>
 	```
@@ -73,9 +74,9 @@ you might want to include your own polyfills or use `webp-hero/dist-cjs/polyfill
 
 ### use webp-hero's native es-modules, like in the future
 
-if you're from the future, you'll probably want to use proper modules, either natively in the browser, or perhaps with optimization via rollup
+if you're from the future, you'll probably want to use proper modules, either natively in the browser, or perhaps with optimization via rollup or what-have-you
 
-this won't work in older browsers, but is great for bringing webp-support to firefox, edge, and safari
+this won't work in older browsers, but is great for bringing webp-support to safari and ie11
 
 here's how you can use webp-hero like in the future, but today
 
@@ -93,8 +94,8 @@ here's how you can use webp-hero like in the future, but today
 
 - the webp-machine class also has a `polyfillImage` and also a `decode` method if you want more fine-grained control (see [webp-machine.ts](./source/webp-machine.ts) source for more info)
 
-direct usage of webp commonjs module
-------------------------------------
+direct usage of webp module
+---------------------------
 
 - the webp-machine has polyfilling and caching logic, but you can use google's webp functionality more directly via `webp-hero/libwebp/dist/webp.js`
 	- this is compiled from google's `libwebp` emscripten build inside a docker container
