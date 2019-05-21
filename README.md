@@ -58,7 +58,7 @@ the global `window` object for you to use
 you'll be familiar with this technique if you're producing your own application
 bundles via browserify or webpack
 
-you might want to include your own polyfills or use `webp-hero/dist-cjs/polyfills.js` if you want to support ie11
+if you want to support ie11, you might want to include your own polyfills or use `webp-hero/dist-cjs/polyfills.js`
 
 1. install the webp-hero npm package
 
@@ -76,9 +76,7 @@ you might want to include your own polyfills or use `webp-hero/dist-cjs/polyfill
 
 if you're from the future, you'll probably want to use proper modules, either natively in the browser, or perhaps with optimization via rollup or what-have-you
 
-this won't work in older browsers, but is great for bringing webp-support to safari and ie11
-
-here's how you can use webp-hero like in the future, but today
+this won't work in older browsers, which might even partly defeat the purpose of using webp-hero
 
 1. use webp-hero on your page in one script tag
 
