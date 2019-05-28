@@ -56,7 +56,7 @@ export class WebpMachine {
 	async polyfillImage(image: HTMLImageElement): Promise<void> {
 		if (await this.webpSupport) return
 		const {src} = image
-		if (/\.webp$/i.test(src)) {
+		if (/.*webp.*/i.test(src)) {
 			if (this.cache[src]) {
 				image.src = this.cache[src]
 				return
