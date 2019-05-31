@@ -1,6 +1,15 @@
 
 # webp-hero changelog
 
+## v0.0.0-dev.23 — 2019-05-31
+
+non-breaking changes:
+
+- add webp-machine option "detectWebpImage" which takes an HTMLImageElement and
+	returns a boolean indicating whether or not the image is webp
+
+	special thanks to @mikunimaru and @Lobasya for contributing issues and pr's on this
+
 ## v0.0.0-dev.21 — 2019-04-28
 
 non-breaking changes:
@@ -21,7 +30,7 @@ introducing proper es-modules, just to be future-proof and cool
 
 however the browserify bundle generated via the commonjs build will be the most compatible with the 'ol ie11
 
-breaking:
+**breaking:**
 - `dist/` now contains a new es-module build
 - `dist-cjs/` now contains the old commonjs equivalent
 - update package.json `main` field to point at `dist-cjs`, also typings updated
@@ -40,7 +49,7 @@ non-breaking changes:
 
 ## v0.0.0-dev.17 — 2019-02-25
 
-breaking changes:
+**breaking changes:**
 - fix interface name from `WebpHeroOptions` to `WebpMachineOptions`
 
 other changes:
