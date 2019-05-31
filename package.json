@@ -1,6 +1,6 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev.21",
+	"version": "0.0.0-dev.22",
 	"description": "webp image format polyfill for browsers",
 	"main": "dist-cjs/index.js",
 	"module": "dist/index.js",
@@ -13,7 +13,7 @@
 		"libwebp/dist/webp.cjs.js"
 	],
 	"scripts": {
-		"start": "http-server",
+		"start": "serve",
 		"prepare": "run-s build test",
 		"build": "run-s clean barrel compile && run-p bundle polyfills",
 		"clean": "rimraf dist dist-cjs && mkdirp dist dist-cjs",
@@ -44,17 +44,17 @@
 	"dependencies": {},
 	"devDependencies": {
 		"array-from": "2.1.1",
-		"barrelsby": "2.0.0",
+		"barrelsby": "2.1.1",
 		"browserify": "16.2.3",
 		"concat-cli": "4.0.0",
 		"es6-promise": "4.2.6",
-		"http-server": "0.11.1",
-		"mdn-polyfills": "5.16.0",
+		"mdn-polyfills": "5.16.3",
 		"mkdirp": "0.5.1",
 		"npm-run-all": "4.1.5",
 		"replace": "1.1.0",
 		"rimraf": "2.6.3",
-		"tinyify": "2.5.0",
-		"typescript": "3.4.5"
+		"serve": "11.0.1",
+		"tinyify": "2.5.1",
+		"typescript": "3.5.1"
 	}
 }
