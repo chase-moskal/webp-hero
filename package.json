@@ -1,6 +1,6 @@
 {
 	"name": "webp-hero",
-	"version": "0.0.0-dev.23",
+	"version": "0.0.0-dev.24",
 	"description": "webp image format polyfill for browsers",
 	"main": "dist-cjs/index.js",
 	"module": "dist/index.js",
@@ -43,18 +43,18 @@
 	"homepage": "https://github.com/chase-moskal/webp-hero#readme",
 	"dependencies": {},
 	"devDependencies": {
-		"array-from": "2.1.1",
-		"barrelsby": "2.1.1",
-		"browserify": "16.2.3",
-		"concat-cli": "4.0.0",
-		"es6-promise": "4.2.6",
-		"mdn-polyfills": "5.16.3",
-		"mkdirp": "0.5.1",
-		"npm-run-all": "4.1.5",
-		"replace": "1.1.0",
-		"rimraf": "2.6.3",
-		"serve": "11.0.1",
-		"tinyify": "2.5.1",
-		"typescript": "3.5.1"
+		"array-from": "^2.1.1",
+		"barrelsby": "^2.1.1",
+		"browserify": "^16.5.0",
+		"concat-cli": "^4.0.0",
+		"es6-promise": "^4.2.8",
+		"mdn-polyfills": "^5.18.0",
+		"mkdirp": "^0.5.1",
+		"npm-run-all": "^4.1.5",
+		"replace": "^1.1.1",
+		"rimraf": "^3.0.0",
+		"serve": "^11.1.0",
+		"tinyify": "^2.5.1",
+		"typescript": "^3.6.2"
 	}
 }

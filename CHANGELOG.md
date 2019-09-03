@@ -1,6 +1,13 @@
 
 # webp-hero changelog
 
+## v0.0.0-dev.24 — 2019-09-03
+
+non-breaking changes:
+
+- update all dependencies (didn't update libwebp, just webp-hero npm deps)
+- remove .npmrc 'save-exact' mode
+
 ## v0.0.0-dev.23 — 2019-05-31
 
 non-breaking changes:
