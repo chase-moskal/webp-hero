@@ -13,7 +13,7 @@ browser polyfill for the webp image format
 
 ### live demo
 
-- [webp-hero/](https://chasemoskal.com/webp-hero/?force) — webp-hero polyfill operating normally (does nothing if your browser supports webp)
+- [webp-hero/](https://chasemoskal.com/webp-hero/) — webp-hero polyfill operating normally (does nothing if your browser supports webp)
 - [webp-hero/?force](https://chasemoskal.com/webp-hero/?force) — webp conversion to png is forced (even if your browser supports webp)
 
 ### freshness
