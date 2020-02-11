@@ -2,6 +2,7 @@
 	this.Module = Module
 	this.webpToSdl = Module.cwrap("WebpToSDL", "number", ["array", "number"])
 	this.setCanvas = function(canvas) { Module.canvas = canvas }
+	this.Module.doNotCaptureKeyboard = true
 }
 
 export {Webp}
