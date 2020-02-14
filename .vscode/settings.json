@@ -23,5 +23,10 @@
 	"[dockerfile]": {
 		"editor.insertSpaces": true,
 		"editor.tabSize": 2
+	},
+
+	"[plaintext]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2
 	}
 }
