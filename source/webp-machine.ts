@@ -1,20 +1,15 @@
-import { Webp } from "../libwebp/dist/webp.js"
-import { loadBinaryData } from "./load-binary-data.js"
-import { detectWebpSupport } from "./detect-webp-support.js"
-import {
-	WebpMachineOptions,
-	PolyfillDocumentOptions,
-	DetectWebpImage,
-} from "./interfaces.js"
-import { convertDataURIToBinary, isBase64Url } from "./convert-binary-data.js"
+import {Webp} from "../libwebp/dist/webp.js"
+import {loadBinaryData} from "./load-binary-data.js"
+import {detectWebpSupport} from "./detect-webp-support.js"
+import {WebpMachineOptions, PolyfillDocumentOptions, DetectWebpImage} from "./interfaces.js"
+import {convertDataURIToBinary, isBase64Url} from "./convert-binary-data.js"
 
 const relax = () => new Promise((resolve) => requestAnimationFrame(resolve))
 
 export class WebpMachineError extends Error {}
 
-export const defaultDetectWebpImage: DetectWebpImage = (
-	image: HTMLImageElement
-) => /\.webp.*$/i.test(image.src)
+export const defaultDetectWebpImage: DetectWebpImage = (image: HTMLImageElement) =>
+	/\.webp.*$/i.test(image.src)
 
 /**
  * Webp Machine
@@ -26,7 +21,7 @@ export class WebpMachine {
 	private readonly webpSupport: Promise<boolean>
 	private readonly detectWebpImage: DetectWebpImage
 	private busy = false
-	private cache: { [key: string]: string } = {}
+	private cache: {[key: string]: string} = {}
 
 	constructor({
 		webp = new Webp(),
@@ -42,8 +37,7 @@ export class WebpMachine {
 	 * Decode raw webp data into a png data url
 	 */
 	async decode(webpData: Uint8Array): Promise<string> {
-		if (this.busy)
-			throw new WebpMachineError("cannot decode when already busy")
+		if (this.busy) throw new WebpMachineError("cannot decode when already busy")
 		this.busy = true
 
 		try {
@@ -66,7 +60,7 @@ export class WebpMachine {
 	 */
 	async polyfillImage(image: HTMLImageElement): Promise<void> {
 		if (await this.webpSupport) return
-		const { src } = image
+		const {src} = image
 		if (this.detectWebpImage(image)) {
 			if (this.cache[src]) {
 				image.src = this.cache[src]
@@ -89,9 +83,9 @@ export class WebpMachine {
 	/**
 	 * Polyfill webp format on the entire web page
 	 */
-	async polyfillDocument({
-		document = window.document,
-	}: PolyfillDocumentOptions = {}): Promise<void> {
+	async polyfillDocument({document = window.document}: PolyfillDocumentOptions = {}): Promise<
+		void
+	> {
 		if (await this.webpSupport) return null
 		for (const image of Array.from(document.querySelectorAll("img"))) {
 			try {
