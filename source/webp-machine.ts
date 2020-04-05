@@ -26,7 +26,7 @@ export class WebpMachine {
 	constructor({
 		webp = new Webp(),
 		webpSupport = detectWebpSupport(),
-		detectWebpImage = defaultDetectWebpImage,
+		detectWebpImage = defaultDetectWebpImage
 	}: WebpMachineOptions = {}) {
 		this.webp = webp
 		this.webpSupport = webpSupport
