@@ -83,9 +83,9 @@ export class WebpMachine {
 	/**
 	 * Polyfill webp format on the entire web page
 	 */
-	async polyfillDocument({document = window.document}: PolyfillDocumentOptions = {}): Promise<
-		void
-	> {
+	async polyfillDocument({
+		document = window.document
+	}: PolyfillDocumentOptions = {}): Promise<void> {
 		if (await this.webpSupport) return null
 		for (const image of Array.from(document.querySelectorAll("img"))) {
 			try {
