@@ -4,7 +4,7 @@ import {detectWebpSupport} from "./detect-webp-support.js"
 import {WebpMachineOptions, PolyfillDocumentOptions, DetectWebpImage} from "./interfaces.js"
 import {convertDataURIToBinary, isBase64Url} from "./convert-binary-data.js"
 
-const relax = () => new Promise((resolve) => requestAnimationFrame(resolve))
+const relax = () => new Promise(resolve => requestAnimationFrame(resolve))
 
 export class WebpMachineError extends Error {}
 
