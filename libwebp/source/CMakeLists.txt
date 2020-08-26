@@ -17,6 +17,8 @@ option(WEBP_BUILD_WEBP_JS "Emscripten build of webp.js." OFF)
 option(WEBP_NEAR_LOSSLESS "Enable near-lossless encoding" ON)
 option(WEBP_ENABLE_SWAP_16BIT_CSP "Enable byte swap for 16 bit colorspaces."
        OFF)
+set(WEBP_BITTRACE "0" CACHE STRING "Bit trace mode (0=none, 1=bit, 2=bytes)")
+set_property(CACHE WEBP_BITTRACE PROPERTY STRINGS 0 1 2)
 
 # Option needed for handling Unicode file names on Windows.
 if(WIN32)
@@ -41,7 +43,7 @@ set(WEBP_DEP_INCLUDE_DIRS)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release"
-      CACHE "Build type: Release, Debug, MinSizeRel or RelWithDebInfo" STRING
+      CACHE STRING "Build type: Release, Debug, MinSizeRel or RelWithDebInfo"
       FORCE)
 endif()
 
@@ -55,6 +57,10 @@ if(WEBP_ENABLE_SWAP_16BIT_CSP)
   add_definitions(-DWEBP_SWAP_16BIT_CSP=1)
 endif()
 
+if(NOT WEBP_BITTRACE STREQUAL "0")
+  add_definitions(-DBITTRACE=${WEBP_BITTRACE})
+endif()
+
 if(WEBP_UNICODE)
   # Windows recommends setting both UNICODE and _UNICODE.
   add_definitions(-DUNICODE -D_UNICODE)
@@ -65,6 +71,7 @@ set(exec_prefix "\$\{prefix\}")
 set(libdir "\$\{prefix\}/lib")
 set(includedir "\$\{prefix\}/include")
 set(PTHREAD_LIBS ${CMAKE_THREAD_LIBS_INIT})
+set(INSTALLED_LIBRARIES)
 
 # ##############################################################################
 # Android only.
@@ -72,6 +79,7 @@ if(ANDROID)
   include_directories(${ANDROID_NDK}/sources/android/cpufeatures)
   add_library(cpufeatures STATIC
               ${ANDROID_NDK}/sources/android/cpufeatures/cpu-features.c)
+  list(APPEND INSTALLED_LIBRARIES cpufeatures)
   target_link_libraries(cpufeatures dl)
   set(WEBP_DEP_LIBRARIES ${WEBP_DEP_LIBRARIES} cpufeatures)
   set(WEBP_DEP_INCLUDE_DIRS ${WEBP_DEP_INCLUDE_DIRS}
@@ -306,7 +314,7 @@ string(REGEX MATCH
              ${TMP})
 
 # Define the libraries to install.
-set(INSTALLED_LIBRARIES webpdecoder webp webpdemux)
+list(APPEND INSTALLED_LIBRARIES webpdecoder webp webpdemux)
 
 # Deal with SIMD. Change the compile flags for SIMD files we use.
 list(LENGTH WEBP_SIMD_FILES_TO_INCLUDE WEBP_SIMD_FILES_TO_INCLUDE_LENGTH)
@@ -341,20 +349,21 @@ if(WEBP_BUILD_ANIM_UTILS
   parse_makefile_am(${CMAKE_CURRENT_SOURCE_DIR}/examples "EXAMPLEUTIL_SRCS"
                     "example_util_[^ ]*")
   list(APPEND EXAMPLEUTIL_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/examples/stopwatch.h)
-  add_library(exampleutil ${EXAMPLEUTIL_SRCS})
+  add_library(exampleutil STATIC ${EXAMPLEUTIL_SRCS})
+  target_link_libraries(exampleutil imageioutil)
   target_include_directories(
     exampleutil
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
 
   parse_makefile_am(${CMAKE_CURRENT_SOURCE_DIR}/imageio "IMAGEIOUTILS_SRCS"
                     "imageio_util_[^ ]*")
-  add_library(imageioutil ${IMAGEIOUTILS_SRCS})
+  add_library(imageioutil STATIC ${IMAGEIOUTILS_SRCS})
   target_link_libraries(imageioutil webp)
 
   # Image-decoding utility library.
   parse_makefile_am(${CMAKE_CURRENT_SOURCE_DIR}/imageio "IMAGEDEC_SRCS"
                     "imagedec_[^ ]*")
-  add_library(imagedec ${IMAGEDEC_SRCS})
+  add_library(imagedec STATIC ${IMAGEDEC_SRCS})
   target_link_libraries(imagedec
                         imageioutil
                         webpdemux
@@ -364,8 +373,8 @@ if(WEBP_BUILD_ANIM_UTILS
   # Image-encoding utility library.
   parse_makefile_am(${CMAKE_CURRENT_SOURCE_DIR}/imageio "IMAGEENC_SRCS"
                     "imageenc_[^ ]*")
-  add_library(imageenc ${IMAGEENC_SRCS})
-  target_link_libraries(imageenc webp)
+  add_library(imageenc STATIC ${IMAGEENC_SRCS})
+  target_link_libraries(imageenc imageioutil webp)
 
   set_property(TARGET exampleutil
                       imageioutil
@@ -458,12 +467,12 @@ if(WEBP_BUILD_VWEBP)
     target_link_libraries(vwebp
                           ${OPENGL_LIBRARIES}
                           exampleutil
-                          GLUT::GLUT
+                          ${GLUT_glut_LIBRARY}
                           imageioutil
                           webp
                           webpdemux)
     target_include_directories(vwebp
-                               PRIVATE GLUT::GLUT
+                               PRIVATE ${GLUT_INCLUDE_DIR}
                                        ${CMAKE_CURRENT_BINARY_DIR}/src
                                        ${OPENGL_INCLUDE_DIR})
     install(TARGETS vwebp RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
@@ -516,7 +525,9 @@ if(WEBP_BUILD_EXTRAS)
   # webp_quality
   add_executable(webp_quality ${WEBP_QUALITY_SRCS} ${WEBP_EXTRAS_SRCS})
   target_link_libraries(webp_quality exampleutil imagedec)
-  target_include_directories(webp_quality PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+  target_include_directories(webp_quality
+                             PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+                                     ${CMAKE_CURRENT_BINARY_DIR})
   install(TARGETS webp_quality RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
   # vwebp_sdl
@@ -544,24 +555,31 @@ if(WEBP_BUILD_WEBP_JS)
   set(WEBP_HAVE_SDL 1)
   set_target_properties(
     webp_js
-    PROPERTIES LINK_FLAGS
-               "-s ENVIRONMENT=\"'web'\" -s WASM=0 -s LEGACY_VM_SUPPORT=1 -s EXPORTED_FUNCTIONS='[\"_WebpToSDL\"]' -s INVOKE_RUN=0 -s TOTAL_MEMORY=67108864 -s ALLOW_MEMORY_GROWTH=1 --memory-init-file 0 \
-       -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"cwrap\"]'")
+    PROPERTIES LINK_FLAGS " \
+      -s WASM=0 \
+      -s EXPORTED_FUNCTIONS='[\"_WebpToSDL\"]' \
+      -s INVOKE_RUN=0 \
+      -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"cwrap\"]' \
+      -s TOTAL_MEMORY=67108864 \
+      -s ALLOW_MEMORY_GROWTH=1 \
+      --memory-init-file 0 \
+    "
+  )
   set_target_properties(webp_js PROPERTIES OUTPUT_NAME webp)
   target_compile_definitions(webp_js PUBLIC EMSCRIPTEN WEBP_HAVE_SDL)
 
-  # # WASM version
-  # add_executable(webp_wasm ${CMAKE_CURRENT_SOURCE_DIR}/extras/webp_to_sdl.c)
-  # target_link_libraries(webp_wasm webpdecoder SDL)
-  # target_include_directories(webp_wasm PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
-  # set_target_properties(
-  #   webp_wasm
-  #   PROPERTIES LINK_FLAGS "-s WASM=1 \
-  #      -s EXPORTED_FUNCTIONS='[\"_WebpToSDL\"]' -s INVOKE_RUN=0 \
-  #      -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"cwrap\"]'")
-  # target_compile_definitions(webp_wasm PUBLIC EMSCRIPTEN WEBP_HAVE_SDL)
+  # WASM version
+  add_executable(webp_wasm ${CMAKE_CURRENT_SOURCE_DIR}/extras/webp_to_sdl.c)
+  target_link_libraries(webp_wasm webpdecoder SDL)
+  target_include_directories(webp_wasm PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+  set_target_properties(
+    webp_wasm
+    PROPERTIES LINK_FLAGS "-s WASM=1 \
+       -s EXPORTED_FUNCTIONS='[\"_WebpToSDL\"]' -s INVOKE_RUN=0 \
+       -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"cwrap\"]'")
+  target_compile_definitions(webp_wasm PUBLIC EMSCRIPTEN WEBP_HAVE_SDL)
 
-  # target_compile_definitions(webpdspdecode PUBLIC EMSCRIPTEN)
+  target_compile_definitions(webpdspdecode PUBLIC EMSCRIPTEN)
 endif()
 
 if(WEBP_BUILD_ANIM_UTILS)

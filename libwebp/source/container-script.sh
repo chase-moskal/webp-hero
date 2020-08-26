@@ -22,6 +22,8 @@ cat \
 # copy in definition file
 cp /work/source/webp.d.ts /dist/webp.d.ts
 
+chmod -R 777 /dist
+
 ##
 ## CONVERT TEST IMAGES
 ##

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
 cd "${0%/*}"
-docker build -t webphero .
-docker run --volume $PWD/dist:/dist -it --rm webphero
+rm -rf dist && mkdir dist
+docker build -t webphero . && \
+	docker run --mount type=bind,source=$PWD/dist,target=/dist -it --rm webphero

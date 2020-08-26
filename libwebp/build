@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 cd "${0%/*}"
-rm -rf dist
-docker build -t webphero .
-docker run --volume $PWD/dist:/dist --rm webphero /work/source/container-script.sh
-chmod -R 755 dist
+rm -rf dist && mkdir dist
+docker build -t webphero . && \
+	docker run --mount type=bind,source=$PWD/dist,target=/dist --rm webphero /work/source/container-script.sh

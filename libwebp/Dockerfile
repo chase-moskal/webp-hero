@@ -1,69 +1,64 @@
 
 ##
-## ==============================
-## :::: LIBWEBP DOCKER BUILD ::::
-## ==============================
-## - download and build google's libwebp from source
-## - libwebp emscripten build outputs "dist/webp.js"
+## ========================================
+## :::: LIBWEBP'S WEBP_JS DOCKER BUILD ::::
+## ========================================
 ##
 
 ##
 ## ESTABLISH DEBIAN CONTAINER
 ##
 
-FROM debian:stretch-slim
-RUN mkdir /work
+FROM debian:bullseye-slim
 RUN apt-get update && apt-get install -y \
   vim git-core curl \
-  build-essential cmake python nodejs \
+  build-essential cmake python3 nodejs \
   libpng-dev libjpeg-dev
 
+RUN mkdir /work
+WORKDIR /work
+
 ##
-## DOWNLOAD AND INSTALL EMSCRIPTEN
+## INSTALL EMSCRIPTEN
 ##
 
-# download emscripten
-RUN cd /work \
-  && curl https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz > /work/emsdk-portable.tar.gz \
-  && tar -xzf /work/emsdk-portable.tar.gz
-
-# run emscripten self installation
-RUN cd /work/emsdk-portable \
-  && ./emsdk update \
-  && ./emsdk install sdk-1.38.30-64bit \
-  && ./emsdk activate sdk-1.38.30-64bit
-
-# verify emscripten
-RUN ["/bin/bash", "-c", "cd /work/emsdk-portable && source ./emsdk_env.sh && emcc --version"]
+RUN ( \
+  git clone https://github.com/emscripten-core/emsdk.git && \
+  cd emsdk && \
+  ./emsdk install 2.0.1 && \
+  ./emsdk activate 2.0.1 \
+)
 
 ##
 ## DOWNLOAD LIBWEBP SOURCE
 ##
 
-RUN mkdir /work/libwebp && cd /work/libwebp \
-  && git clone --branch master https://github.com/webmproject/libwebp.git . \
-  && git checkout 1326988d1091202be426aba07d0061b6759862ff
+RUN ( \
+  git clone --branch master https://github.com/webmproject/libwebp.git && \
+  cd libwebp && \
+  git checkout def64e920ff69e1d8270a2787d13df7c0d38d8ba \
+)
 
 ##
 ## COPY LOCAL FILES INTO CONTAINER
 ##
 
-ADD . /work
-
-##
-## RUN LIBWEBP EMSCRIPTEN BUILD
-##
+COPY . /work
 
 # replace libwebp emscripten cmake instructions
-RUN rm -rf /work/libwebp/CMakeLists.txt \
-  && cp /work/source/CMakeLists.txt /work/libwebp
+RUN rm /work/libwebp/CMakeLists.txt && \
+  cp /work/source/CMakeLists.txt /work/libwebp
 
-# run the webp js build
-RUN ["/bin/bash", "-c", "cd /work/emsdk-portable \
-  && source ./emsdk_env.sh \
-  && cd /work/libwebp/webp_js \
-  && cmake -DWEBP_BUILD_WEBP_JS=ON \
-    -DEMSCRIPTEN_GENERATE_BITCODE_STATIC_LIBRARIES=1 \
+##
+## RUN LIBWEBP WEBP_JS EMSCRIPTEN BUILD
+##
+
+RUN ["/bin/bash", "-c", " \
+  source /work/emsdk/emsdk_env.sh && \
+  export EMSCRIPTEN=$EMSDK/upstream/emscripten/ && \
+  cd /work/libwebp/webp_js && \
+  cmake -DWEBP_BUILD_WEBP_JS=ON \
     -DCMAKE_TOOLCHAIN_FILE=$EMSCRIPTEN/cmake/Modules/Platform/Emscripten.cmake \
-    ../ \
-  && make"]
+    ../ && \
+  make \
+"]
