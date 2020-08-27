@@ -97,6 +97,7 @@ advanced usage
 		- `webpMachine.polyfillDocument()` — run over the entire html document, sniffing out webp `<img>` elements to convert (only if the browser doesn't support webp)
 		- `webpMachine.polyfillImage(imageElement)` — converts the given webp image (only if the browser doesn't support webp)
 		- `webpMachine.decode(webpData)` — decode webp `Uint8Array` data, return a png data-url
+		- `webpMachine.clearCache()` — manually wipe the cache to save memory
 - other modules like `convert-binary-data.ts` and etc may be unstable, you might not want to rely on those
 
 ### manual-style with the google libwebp decoder

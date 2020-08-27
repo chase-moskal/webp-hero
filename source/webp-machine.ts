@@ -101,4 +101,11 @@ export class WebpMachine {
 			}
 		}
 	}
+
+	/**
+	 * Manually wipe the cache to save memory
+	 */
+	clearCache() {
+		this.cache = {}
+	}
 }
