@@ -8,9 +8,7 @@
 	"files": [
 		"dist",
 		"dist-cjs",
-		"libwebp/dist/webp.js",
-		"libwebp/dist/webp.d.ts",
-		"libwebp/dist/webp.cjs.js"
+		"libwebp/dist"
 	],
 	"scripts": {
 		"start": "serve",
