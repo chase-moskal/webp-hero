@@ -81,6 +81,8 @@ installation and usage
 		</script>
 		```
 
+- **OPTION D — angular users can use [ngx-webp-polyfill](https://github.com/turnstileweb/ngx-webp-polyfill)**
+
 advanced usage
 --------------
 
