@@ -1,124 +1,129 @@
 
-![webp-hero](webp-hero.jpg)
-
-webp-hero
-=========
+🦸‍♂️ webp-hero
+============
 
 browser polyfill for the webp image format
 ------------------------------------------
 
-- webp images come alive, even in safari and ie11! (firefox and edge now support webp)
-- webp-hero actually runs google's `libwebp` decoder in the browser — it converts webp images to png's on-the-fly
-- webp-hero's polyfill functionality renders decoded image data to a hidden canvas, and converts that to a png data url which is then displayed to the user
+- 🎉 webp images come alive, even in safari and ie11! _(firefox and edge now support webp)_
+- ⚙️ webp-hero actually runs google's `libwebp` decoder in the browser _(converts webp images to png on-the-fly)_
+- 🕹️ live demo
+	- [webp-hero/](https://chasemoskal.com/webp-hero/) — webp-hero polyfill operating normally _(does nothing if your browser supports webp)_
+	- [webp-hero/?force](https://chasemoskal.com/webp-hero/?force) — webp conversion to png is forced _(even if your browser supports webp)_
+- ♻️ freshness
+	- [libwebp def64e9](https://github.com/webmproject/libwebp/tree/def64e920ff69e1d8270a2787d13df7c0d38d8ba) — 2020-08-17
+	- [emscripten 2.0.1](https://github.com/emscripten-core/emscripten/releases/tag/2.0.1) — 2020-08-21
+- 💯 browser support tested 2020-08-26
+	- evergreen browsers (chrome, firefox, edge, desktop safari)
+	- windows 7 ie11
+	- iphone 7 mobile safari
+	- galaxy s5 samsung internet
+- ⚠️ known issues and deficiencies
+	- doesn't yet support css background images (pull requests welcome!)
+	- doesn't yet support `<picture>` elements
+	- doesn't yet support web workers (decodes images one-at-a-time, blocking, single-threaded)
+	- no wasm (because older browsers)
+	- at one megabyte, the decoder is quite heavy
 
-### live demo
+installation and usage
+----------------------
 
-- [webp-hero/](https://chasemoskal.com/webp-hero/) — webp-hero polyfill operating normally (does nothing if your browser supports webp)
-- [webp-hero/?force](https://chasemoskal.com/webp-hero/?force) — webp conversion to png is forced (even if your browser supports webp)
+- **option A — use webp-hero's bundle with the polyfills**
 
-### freshness
+	- this technique works nicely for older browsers like ie11
 
-- [libwebp 1326988](https://github.com/webmproject/libwebp/commit/1326988d1091202be426aba07d0061b6759862ff) — 2019-04-18
-- [emscripten 1.38.30](https://github.com/emscripten-core/emscripten/releases/tag/1.38.30) — 2019-03-21
+	1. load generic polyfills and the webp-hero global bundle via script tags
 
-how to use webp-hero's polyfill on your page
---------------------------------------------
+		```html
+		<script src="https://unpkg.com/webp-hero@0.0.0-dev.25/dist-cjs/polyfills.js"></script>
+		<script src="https://unpkg.com/webp-hero@0.0.0-dev.25/dist-cjs/webp-hero.bundle.js"></script>
+		```
 
-- webp-hero contains a class called `WebpMachine` which has a `polyfillDocument` method which converts webp images into png's
-- currently, the polyfill only works on img tags (not yet on css images)
-- es modules in `dist/`, and common-js modules in `dist-cjs/`
-- `dist-cjs/polyfills.js` is a collection of polyfills that restores ie11 support
-- `dist-cjs/webp-hero.bundle.js` is a bundle that writes `webpHero` as a global
+	2. run the webp-hero polyfill function on the document
 
-### use webp-hero's bundle with the polyfills
+		```html
+		<script>
+			var webpMachine = new webpHero.WebpMachine()
+			webpMachine.polyfillDocument()
+		</script>
+		```
 
-this technique works nicely for older browsers
+- **option B — use webp-hero's commonjs modules in your application**
 
-include the bundle via a script tag, and it will install `webpHero` onto
-the global `window` object for you to use
+	- you'll be familiar with this 'ol technique if you're producing your own application
+	bundles via browserify or webpack
+	- if you want to support old browsers like ie11, you might want to include your own polyfills or use `webp-hero/dist-cjs/polyfills.js`
 
-1. load the polyfills and the webp-hero bundle globally via script tags
+	1. install the webp-hero npm package
 
-	```html
-	<script src="https://unpkg.com/webp-hero@0.0.0-dev.21/dist-cjs/polyfills.js"></script>
-	<script src="https://unpkg.com/webp-hero@0.0.0-dev.21/dist-cjs/webp-hero.bundle.js"></script>
-	```
+		`npm install webp-hero`
 
-2. run the webp-hero polyfill function on the document
+	2. import and run the webp-hero polyfill function
 
-	```html
-	<script>
-		var webpMachine = new webpHero.WebpMachine()
-		webpMachine.polyfillDocument()
-	</script>
-	```
-
-### use webp-hero's commonjs modules in your application
-
-you'll be familiar with this technique if you're producing your own application
-bundles via browserify or webpack
-
-if you want to support ie11, you might want to include your own polyfills or use `webp-hero/dist-cjs/polyfills.js`
-
-1. install the webp-hero npm package
-
-	`npm install webp-hero`
-
-2. import and run the webp-hero polyfill function
-
-	```js
-	import {WebpMachine} from "webp-hero"
-	const webpMachine = new WebpMachine()
-	webpMachine.polyfillDocument()
-	```
-
-### use webp-hero's native es-modules, like in the future
-
-if you're from the future, you'll probably want to use proper modules, either natively in the browser, or perhaps with optimization via rollup or what-have-you
-
-this won't work in older browsers, which might even partly defeat the purpose of using webp-hero
-
-1. use webp-hero on your page in one script tag
-
-	```html
-	<script type="module">
-		import {WebpMachine} from "https://unpkg.com/webp-hero@0.0.0-dev.21/dist/webp-machine.js"
+		```js
+		import {WebpMachine} from "webp-hero"
 		const webpMachine = new WebpMachine()
 		webpMachine.polyfillDocument()
-	</script>
-	```
+		```
 
-### advanced usage
+- **OPTION C — use webp-hero's es-modules, like in the future**
 
-- the webp-machine class also has a `polyfillImage` and also a `decode` method if you want more fine-grained control (see [webp-machine.ts](./source/webp-machine.ts) source for more info)
+	- es modules are available. but why would anybody use these for webp-hero? i guess it could be useful for.. mobile safari? anyways, this won't work in older browsers, which might defeat the purpose of using webp-hero in the first place? well.. it's here for you if you need it!
 
-direct usage of webp module
----------------------------
+	1. use webp-hero on your page in one script tag
 
-- the webp-machine has polyfilling and caching logic, but you can use google's webp functionality more directly via `webp-hero/libwebp/dist/webp.js`
-	- this is compiled from google's `libwebp` emscripten build inside a docker container
-	- it is then wrapped in an es-module (`webp.js`) and also a common-js module (`webp.cjs.js`)
-	- it contains minimal functionality for rendering webp data to a canvas
-	- the typescript declaration file describes the usage signature: [webp.d.ts](./libwebp/source/webp.d.ts)
+		```html
+		<script type="module">
+			import {WebpMachine} from "https://unpkg.com/webp-hero@0.0.0-dev.25/dist/webp-machine.js"
+			const webpMachine = new WebpMachine()
+			webpMachine.polyfillDocument()
+		</script>
+		```
 
-development on webp-hero
-------------------------
+advanced usage
+--------------
+
+### webp-machine
+
+- [webp-machine.ts](./source/webp-machine.ts) has logic for polyfilling, caching, and enforcing sequential webp decoding
+	- `new WebpMachine({...options})` — all options have defaults, but you can override them
+		- `{webp}` google module which contains the actual decoder
+		- `{webpSupport}` function which detects whether the browser supports webp
+		- `{detectWebpImage}` detect whether or not the provided `<img>` element is in webp format
+	- the webpMachine you create has the following methods
+		- `webpMachine.polyfillDocument()` — run over the entire html document, sniffing out webp `<img>` elements to convert (only if the browser doesn't support webp)
+		- `webpMachine.polyfillImage(imageElement)` — converts the given webp image (only if the browser doesn't support webp)
+		- `webpMachine.decode(webpData)` — decode webp `Uint8Array` data, return a png data-url
+- other modules like `convert-binary-data.ts` and etc may be unstable, you might not want to rely on those
+
+### manual-style with the google libwebp decoder
+
+- we compile from google's libwebp emscripten build in a docker container
+- this build contains minimal functionality for rendering webp data to a canvas:
+	- google's emscripten output: `webp-hero/libwebp/google/webp.js`
+- we do little hacks to wrap this build into two modules:
+	- common-js: `webp-hero/libwebp/webp.cjs.js`
+	- es-module: `webp-hero/libwebp/webp.js`
+- we have a typescript declaration for it too: [webp.d.ts](./libwebp/source/webp.d.ts)
+
+development and contributing
+----------------------------
 
 - **prerequisites**
-	- git
-	- node
-	- docker (only if you want to rebuild libwebp)
+	- git and node
+	- docker (only if you want to rebuild google's libwebp)
 
-- **development**
+- **webp-hero development**
 	- `npm install` — install dependencies and run build
-		- run typescript build
+		- runs a typescript build, uses browserify to make the bundle
 		- generates `webp-hero/dist/` and `webp-hero/dist-cjs/`
+		- generates the polyfills (cjs-only)
+		- does *not* rebuild google's libwebp
 	- `npm start` — start http server
-		- visit http://localhost:8080/ to see the webp-hero demo
-		- visit http://localhost:8080/libwebp/dist/google/ to see google's demo
+		- visit http://localhost:5000/ to see the webp-hero demo
+		- visit http://localhost:5000/libwebp/dist/google/ to see google's demo
 
-- **rebuild libwebp**
-	- google's libwebp project is built inside of a docker container
-	- libwebp build artifacts (in `libwebp/dist`) are checked into git, because it takes so long to build
-	- `sudo ./libwebp/build` — run the libwebp build (docker requires sudo)
-	- `sudo ./libwebp/debug` — useful to drop into the container to have a look around, does not any emit build artifacts'
+- **rebuild google's libwebp**
+	- libwebp build artifacts in `libwebp/dist` are checked into git, because it takes so damn long to build
+	- `libwebp/build` — run dockerized libwebp build, regenerates `libwebp/dist`
+	- `libwebp/debug` — handy for debugging the dockerized build
