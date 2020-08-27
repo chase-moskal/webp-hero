@@ -36,8 +36,8 @@ installation and usage
 	1. load generic polyfills and the webp-hero global bundle via script tags
 
 		```html
-		<script src="https://unpkg.com/webp-hero@0.0.0-dev.25/dist-cjs/polyfills.js"></script>
-		<script src="https://unpkg.com/webp-hero@0.0.0-dev.25/dist-cjs/webp-hero.bundle.js"></script>
+		<script src="https://unpkg.com/webp-hero@0.0.0-dev.26/dist-cjs/polyfills.js"></script>
+		<script src="https://unpkg.com/webp-hero@0.0.0-dev.26/dist-cjs/webp-hero.bundle.js"></script>
 		```
 
 	2. run the webp-hero polyfill function on the document
@@ -75,7 +75,7 @@ installation and usage
 
 		```html
 		<script type="module">
-			import {WebpMachine} from "https://unpkg.com/webp-hero@0.0.0-dev.25/dist/webp-machine.js"
+			import {WebpMachine} from "https://unpkg.com/webp-hero@0.0.0-dev.26/dist/webp-machine.js"
 			const webpMachine = new WebpMachine()
 			webpMachine.polyfillDocument()
 		</script>
