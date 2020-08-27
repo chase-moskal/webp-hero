@@ -67,7 +67,7 @@ installation and usage
 		webpMachine.polyfillDocument()
 		```
 
-- **OPTION C — use webp-hero's es-modules, like in the future**
+- **option C — use webp-hero's es-modules, like in the future**
 
 	- es modules are available. but why would anybody use these for webp-hero? i guess it could be useful for.. mobile safari? anyways, this won't work in older browsers, which might defeat the purpose of using webp-hero in the first place? well.. it's here for you if you need it!
 
@@ -81,7 +81,7 @@ installation and usage
 		</script>
 		```
 
-- **OPTION D — angular users can use [ngx-webp-polyfill](https://github.com/turnstileweb/ngx-webp-polyfill)**
+- **option D — angular users can use [ngx-webp-polyfill](https://github.com/turnstileweb/ngx-webp-polyfill)**
 
 advanced usage
 --------------
