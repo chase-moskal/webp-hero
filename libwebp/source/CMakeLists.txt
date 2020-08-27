@@ -560,6 +560,7 @@ if(WEBP_BUILD_WEBP_JS)
       -s EXPORTED_FUNCTIONS='[\"_WebpToSDL\"]' \
       -s INVOKE_RUN=0 \
       -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"cwrap\"]' \
+      -s LEGACY_VM_SUPPORT=1 \
       -s TOTAL_MEMORY=67108864 \
       -s ALLOW_MEMORY_GROWTH=1 \
       --memory-init-file 0 \
