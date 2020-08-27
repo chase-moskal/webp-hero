@@ -1,3 +1,4 @@
+
 import {Webp} from "../libwebp/dist/webp.js"
 import {loadBinaryData} from "./load-binary-data.js"
 import {detectWebpSupport} from "./detect-webp-support.js"
