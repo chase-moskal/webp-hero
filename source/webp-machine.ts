@@ -2,6 +2,7 @@
 import {Webp} from "../libwebp/dist/webp.js"
 import {loadBinaryData} from "./load-binary-data.js"
 import {detectWebpSupport} from "./detect-webp-support.js"
+import {convertDataURIToBinary, isBase64Url} from "./convert-binary-data.js"
 import {WebpMachineOptions, PolyfillDocumentOptions, DetectWebpImage} from "./interfaces.js"
 
 const relax = () => new Promise(resolve => requestAnimationFrame(resolve))
@@ -68,7 +69,9 @@ export class WebpMachine {
 				return
 			}
 			try {
-				const webpData = await loadBinaryData(src)
+				const webpData = isBase64Url(src)
+					? convertDataURIToBinary(src)
+					: await loadBinaryData(src)
 				const pngData = await this.decode(webpData)
 				image.src = this.cache[src] = pngData
 			}
