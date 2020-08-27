@@ -1,3 +1,4 @@
+
 const BASE64_MARKER = ";base64,"
 
 export const isBase64Url = (src: string) => src.indexOf(BASE64_MARKER) > -1
