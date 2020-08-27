@@ -24,6 +24,7 @@
 
 			// polyfill this entire document's webp images
 			webpMachine.polyfillDocument()
+				.catch(function(error) { console.error(error) })
 		</script>
 	</body>
 </html>
