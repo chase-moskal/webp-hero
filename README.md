@@ -22,6 +22,7 @@ browser polyfill for the webp image format
 	- doesn't yet support css background images (pull requests welcome!)
 	- doesn't yet support `<picture>` elements
 	- doesn't yet support web workers (decodes images one-at-a-time, blocking, single-threaded)
+	- currently only detects webp images with filename ending in `.webp` extension
 	- no wasm (because older browsers)
 	- at one megabyte, the decoder is quite heavy
 
