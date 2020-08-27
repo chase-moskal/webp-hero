@@ -1,6 +1,16 @@
 
 # webp-hero changelog
 
+## v0.0.0-dev.26 — 2020-08-26
+
+we finally have a fresh new working build of libwebp. this unblocks webp-hero development
+
+non-breaking changes:
+- add webp-machine `clearCache` method so you can manually save memory 8ace812
+- rework readme
+- merge @theonetheycallneo's base64 support a4cb1f8
+- fix input blocking via `doNotCaptureKeyboard` cda1bd6
+
 ## v0.0.0-dev.24 — 2019-09-03
 
 non-breaking changes:
