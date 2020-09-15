@@ -29,9 +29,8 @@ browser polyfill for the webp image format
 installation and usage
 ----------------------
 
-- **option A — use webp-hero's bundle with the polyfills**
-
-	- this technique works nicely for older browsers like ie11
+- **option A — use webp-hero's bundle with the polyfills**  
+	this technique works nicely for older browsers like ie11
 
 	1. load generic polyfills and the webp-hero global bundle via script tags
 
@@ -49,11 +48,9 @@ installation and usage
 		</script>
 		```
 
-- **option B — use webp-hero's commonjs modules in your application**
-
-	- you'll be familiar with this 'ol technique if you're producing your own application
-	bundles via browserify or webpack
-	- if you want to support old browsers like ie11, you might want to include your own polyfills or use `webp-hero/dist-cjs/polyfills.js`
+- **option B — use webp-hero's commonjs modules in your application**  
+	you'll be familiar with this 'ol technique if you're producing your own application bundles via browserify or webpack.  
+	if you want to support old browsers like ie11, you might want to include your own polyfills or use `webp-hero/dist-cjs/polyfills.js`
 
 	1. install the webp-hero npm package
 
@@ -67,9 +64,8 @@ installation and usage
 		webpMachine.polyfillDocument()
 		```
 
-- **option C — use webp-hero's es-modules, like in the future**
-
-	- es modules are available. but why would anybody use these for webp-hero? i guess it could be useful for.. mobile safari? anyways, this won't work in older browsers, which might defeat the purpose of using webp-hero in the first place? well.. it's here for you if you need it!
+- **option C — use webp-hero's es-modules, like in the future**  
+	es modules are available. but why would anybody use these for webp-hero? i guess it could be useful for.. mobile safari? anyways, this won't work in older browsers, which might defeat the purpose of using webp-hero in the first place? well.. it's here for you if you need it!
 
 	1. use webp-hero on your page in one script tag
 
