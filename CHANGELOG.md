@@ -1,6 +1,11 @@
 
 # webp-hero changelog
 
+## v0.0.0-dev.27 — 2020-10-21
+
+non-breaking changes:
+- fix issue #40 where webp build was requiring node modules like fs
+
 ## v0.0.0-dev.26 — 2020-08-26
 
 we finally have a fresh new working build of libwebp. this unblocks webp-hero development

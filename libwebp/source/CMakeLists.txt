@@ -557,6 +557,7 @@ if(WEBP_BUILD_WEBP_JS)
     webp_js
     PROPERTIES LINK_FLAGS " \
       -s WASM=0 \
+      -s ENVIRONMENT='web' \
       -s EXPORTED_FUNCTIONS='[\"_WebpToSDL\"]' \
       -s INVOKE_RUN=0 \
       -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"cwrap\"]' \
