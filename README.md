@@ -10,6 +10,7 @@ browser polyfill for the webp image format
 - 🕹️ live demo
 	- [webp-hero/](https://webp-hero.chasemoskal.com/) — webp-hero polyfill operating normally _(does nothing if your browser supports webp)_
 	- [webp-hero/?force](https://webp-hero.chasemoskal.com/?force) — webp conversion to png is forced _(even if your browser supports webp)_
+	- [webp-hero/?force?useCanvasElements](https://webp-hero.chasemoskal.com/?force?useCanvasElements) — wholly replace webp image elements with canvas elements _(added for icecat compatibility)_
 - ♻️ freshness
 	- [libwebp def64e9](https://github.com/webmproject/libwebp/tree/def64e920ff69e1d8270a2787d13df7c0d38d8ba) — 2020-08-17
 	- [emscripten 2.0.1](https://github.com/emscripten-core/emscripten/releases/tag/2.0.1) — 2020-08-21
@@ -91,7 +92,7 @@ webp-hero advanced usage
 		- `{webp}` google module which contains the actual decoder
 		- `{webpSupport}` function which detects whether the browser supports webp
 		- `{detectWebpImage}` detect whether or not the provided `<img>` element is in webp format
-		- `{useCanvasElements: true}` boolean which when true causes webp-hero to polyfill images by wholly replacing them with canvas elements (instead of using png data urls). this helps compatibility with icecat (default: false)
+		- `{useCanvasElements: true}` boolean which when true causes webp-hero to polyfill webp images by wholly replacing them with canvas elements (instead of using png data urls). this helps compatibility with icecat (default: false)
 	- the webpMachine you create has the following methods
 		- `webpMachine.polyfillDocument()` — run over the entire html document, sniffing out webp `<img>` elements to convert (only if the browser doesn't support webp)
 		- `webpMachine.polyfillImage(imageElement)` — converts the given webp image (only if the browser doesn't support webp)
