@@ -91,6 +91,7 @@ webp-hero advanced usage
 		- `{webp}` google module which contains the actual decoder
 		- `{webpSupport}` function which detects whether the browser supports webp
 		- `{detectWebpImage}` detect whether or not the provided `<img>` element is in webp format
+		- `{useCanvasElements: true}` boolean which when true causes webp-hero to polyfill images by wholly replacing them with canvas elements (instead of using png data urls). this helps compatibility with icecat (default: false)
 	- the webpMachine you create has the following methods
 		- `webpMachine.polyfillDocument()` — run over the entire html document, sniffing out webp `<img>` elements to convert (only if the browser doesn't support webp)
 		- `webpMachine.polyfillImage(imageElement)` — converts the given webp image (only if the browser doesn't support webp)
