@@ -5,7 +5,7 @@ import {detectWebpSupport} from "./detect-webp-support.js"
 import {convertDataURIToBinary, isBase64Url} from "./convert-binary-data.js"
 import {WebpMachineOptions, PolyfillDocumentOptions, DetectWebpImage} from "./interfaces.js"
 
-const relax = () => new Promise(resolve => requestAnimationFrame(resolve))
+const relax = () => new Promise(resolve => setTimeout(resolve, 0))
 
 export class WebpMachineError extends Error {}
 
@@ -22,39 +22,52 @@ export class WebpMachine {
 	private readonly webpSupport: Promise<boolean>
 	private readonly detectWebpImage: DetectWebpImage
 	private busy = false
-	private cache: {[key: string]: string} = {}
+	private cache: {[key: string]: string | HTMLCanvasElement} = {}
+	private useCanvasElements = false
 
 	constructor({
 		webp = new Webp(),
 		webpSupport = detectWebpSupport(),
-		detectWebpImage = defaultDetectWebpImage
+		useCanvasElements = false,
+		detectWebpImage = defaultDetectWebpImage,
 	}: WebpMachineOptions = {}) {
 		this.webp = webp
 		this.webpSupport = webpSupport
+		this.useCanvasElements = useCanvasElements
 		this.detectWebpImage = detectWebpImage
+	}
+
+	/**
+	 * Paint a webp image onto a canvas element
+	 */
+	async decodeToCanvas(canvas: HTMLCanvasElement, webpData: Uint8Array) {
+		if (this.busy)
+			throw new WebpMachineError("cannot decode when already busy")
+
+		this.busy = true
+
+		try {
+			await relax()
+			this.webp.setCanvas(canvas)
+			this.webp.webpToSdl(webpData, webpData.length)
+		}
+		catch (error) {
+			error.name = WebpMachineError.name
+			error.message = `failed to decode webp image: ${error.message}`
+			throw error
+		}
+		finally {
+			this.busy = false
+		}
 	}
 
 	/**
 	 * Decode raw webp data into a png data url
 	 */
 	async decode(webpData: Uint8Array): Promise<string> {
-		if (this.busy) throw new WebpMachineError("cannot decode when already busy")
-		this.busy = true
-
-		try {
-			await relax()
-			const canvas = document.createElement("canvas")
-			this.webp.setCanvas(canvas)
-			this.webp.webpToSdl(webpData, webpData.length)
-			this.busy = false
-			return canvas.toDataURL()
-		}
-		catch (error) {
-			this.busy = false
-			error.name = WebpMachineError.name
-			error.message = `failed to decode webp image: ${error.message}`
-			throw error
-		}
+		const canvas = document.createElement("canvas")
+		await this.decodeToCanvas(canvas, webpData)
+		return canvas.toDataURL()
 	}
 
 	/**
@@ -65,15 +78,28 @@ export class WebpMachine {
 		const {src} = image
 		if (this.detectWebpImage(image)) {
 			if (this.cache[src]) {
-				image.src = this.cache[src]
+				if (this.useCanvasElements) {
+					const canvas = cloneCanvas(<HTMLCanvasElement>this.cache[src])
+					replaceImageWithCanvas(image, canvas)
+				}
+				else
+					image.src = <string>this.cache[src]
 				return
 			}
 			try {
 				const webpData = isBase64Url(src)
 					? convertDataURIToBinary(src)
 					: await loadBinaryData(src)
-				const pngData = await this.decode(webpData)
-				image.src = this.cache[src] = pngData
+				if (this.useCanvasElements) {
+					const canvas = document.createElement("canvas")
+					await this.decodeToCanvas(canvas, webpData)
+					replaceImageWithCanvas(image, canvas)
+					this.cache[src] = canvas
+				}
+				else {
+					const pngData = await this.decode(webpData)
+					image.src = this.cache[src] = pngData
+				}
 			}
 			catch (error) {
 				error.name = WebpMachineError.name
@@ -108,4 +134,27 @@ export class WebpMachine {
 	clearCache() {
 		this.cache = {}
 	}
+}
+
+function cloneCanvas(oldCanvas: HTMLCanvasElement) {
+	const newCanvas = document.createElement("canvas")
+	newCanvas.className = oldCanvas.className
+	newCanvas.width = oldCanvas.width
+	newCanvas.height = oldCanvas.height
+	newCanvas.style.display = oldCanvas.style.display
+	newCanvas.style.width = oldCanvas.style.width
+	newCanvas.style.height = oldCanvas.style.height
+	const context = newCanvas.getContext("2d")
+	context.drawImage(oldCanvas, 0, 0)
+	return newCanvas
+}
+
+function replaceImageWithCanvas(image: HTMLImageElement, canvas: HTMLCanvasElement) {
+	canvas.className = image.className
+	canvas.style.display = image.style.display
+	canvas.style.width = image.style.width
+	canvas.style.height = image.style.height
+	const parent = image.parentElement
+	parent.removeChild(image)
+	parent.appendChild(canvas)
 }
