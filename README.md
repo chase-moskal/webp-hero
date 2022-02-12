@@ -8,8 +8,8 @@ browser polyfill for the webp image format
 - 🎉 webp images come alive, even in safari and ie11! _(firefox and edge now support webp)_
 - ⚙️ webp-hero actually runs google's `libwebp` decoder in the browser _(converts webp images to png on-the-fly)_
 - 🕹️ live demo
-	- [webp-hero/](https://chasemoskal.com/webp-hero/) — webp-hero polyfill operating normally _(does nothing if your browser supports webp)_
-	- [webp-hero/?force](https://chasemoskal.com/webp-hero/?force) — webp conversion to png is forced _(even if your browser supports webp)_
+	- [webp-hero/](https://webp-hero.chasemoskal.com/) — webp-hero polyfill operating normally _(does nothing if your browser supports webp)_
+	- [webp-hero/?force](https://webp-hero.chasemoskal.com/?force) — webp conversion to png is forced _(even if your browser supports webp)_
 - ♻️ freshness
 	- [libwebp def64e9](https://github.com/webmproject/libwebp/tree/def64e920ff69e1d8270a2787d13df7c0d38d8ba) — 2020-08-17
 	- [emscripten 2.0.1](https://github.com/emscripten-core/emscripten/releases/tag/2.0.1) — 2020-08-21
