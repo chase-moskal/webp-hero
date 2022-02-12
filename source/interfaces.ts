@@ -7,6 +7,7 @@ export interface WebpMachineOptions {
 	webp?: Webp
 	webpSupport?: Promise<boolean>
 	detectWebpImage?: DetectWebpImage
+	useCanvasElements?: boolean
 }
 
 export interface PolyfillDocumentOptions {

@@ -14,13 +14,23 @@
 		<script src="dist-cjs/polyfills.js"></script>
 		<script src="dist-cjs/webp-hero.bundle.js"></script>
 		<script>
+
 			// for this demo, you can add "?force" to the url to force webp conversion
 			var webpSupport = location.search.indexOf("force") !== -1
 				? Promise.resolve(false)
 				: undefined
 
+			// you can also add "?useCanvasElements" to the url
+			// to replace img elements with canvases
+			var useCanvasElements = location.search.indexOf("useCanvasElements") !== -1
+				? true
+				: false
+
 			// instance the webp machine
-			var webpMachine = new webpHero.WebpMachine({webpSupport: webpSupport})
+			var webpMachine = new webpHero.WebpMachine({
+				webpSupport: webpSupport,
+				useCanvasElements: useCanvasElements,
+			})
 
 			// polyfill this entire document's webp images
 			webpMachine.polyfillDocument()
