@@ -1,6 +1,11 @@
 
 # webp-hero changelog
 
+## v0.0.0-dev.28 — 2022-02-12
+
+non-breaking changes:
+- add `useCanvasElements` boolean option to WebpMachine, which causes webp-hero to polyfill by wholly replacing webp image elements with canvas elements
+
 ## v0.0.0-dev.27 — 2020-10-21
 
 non-breaking changes:
