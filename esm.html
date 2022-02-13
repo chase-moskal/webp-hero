@@ -23,12 +23,21 @@
 			async function main() {
 
 				// for this demo, you can add "?force" to the url to force webp conversion
-				const webpSupport = location.search.indexOf("force") !== -1
+				var webpSupport = location.search.indexOf("force") !== -1
 					? Promise.resolve(false)
 					: undefined
-	
+
+				// you can also add "?useCanvasElements" to the url
+				// to replace img elements with canvases
+				var useCanvasElements = location.search.indexOf("useCanvasElements") !== -1
+					? true
+					: false
+
 				// instance the webp machine
-				const webpMachine = new WebpMachine({webpSupport})
+				var webpMachine = new WebpMachine({
+					webpSupport: webpSupport,
+					useCanvasElements: useCanvasElements,
+				})
 	
 				// polyfill this entire document's webp images
 				await webpMachine.polyfillDocument()
