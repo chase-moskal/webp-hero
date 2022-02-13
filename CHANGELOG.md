@@ -1,7 +1,14 @@
 
 # webp-hero changelog
 
-## v0.0.0-dev.29
+## v0.0.1 — 2022-02-13
+
+non-breaking changes:
+- improve canvas helper functions, in the way they copy dimensions and styles
+	- `WebpMachine.replaceImageWithCanvas`
+	- `WebpMachine.cloneCanvas`
+
+## v0.0.0 — 2022-02-13
 
 non-breaking changes:
 - add static member canvas helpers to WebpMachine
