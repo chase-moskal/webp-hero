@@ -4,25 +4,34 @@
 		<meta charset="utf-8"/>
 		<title>webp-hero</title>
 		<style>
+			* { margin: 0; padding: 0; box-sizing: border-box; }
 			html {
 				background: #222;
 				color: #aaa;
+				padding: 1em;
 			}
-			p { margin: 0 1em; }
+			h1 { margin: 1em auto; }
+			section { padding: 2em }
 			a { color: #fa4; }
 		</style>
 	</head>
 	<body>
-		<h1>webp-hero</h1>
-		<p><a href="https://github.com/chase-moskal/webp-hero">webp-hero github</a></p>
-		<p><a href="/libwebp/dist/google/index.html">google's webp demo</a></p>
-		<p><a href=".">.</a> standard webp usage</p>
-		<p><a href="./?force">?force</a> force webp decoding</p>
-		<p><a href="./?force?useCanvasElements">?force?useCanvasElements</a> replace images with canvases</p>
+		<section>
+			<h1>webp-hero</h1>
+			<p><a href="https://github.com/chase-moskal/webp-hero">webp-hero github</a></p>
+			<p><a href="/libwebp/dist/google/index.html">google's webp demo</a></p>
+			<p><a href=".">.</a> standard webp usage</p>
+			<p><a href="./?force">?force</a> force webp decoding</p>
+			<p><a href="./?force?useCanvasElements">?force?useCanvasElements</a> replace images with canvases</p>
+		</section>
 
-		<img alt="" src="images/dice.webp"/>
 		<img alt="" src="images/landscape.webp"/>
-		<img alt="" src="images/firebreather.webp"/>
+		<img alt="" width="300" src="images/dice.webp"/>
+		<img alt="" style="width: 800px" src="images/firebreather.webp"/>
+		<p>repeated, to test caching</p>
+		<img alt="" src="images/landscape.webp"/>
+		<img alt="" width="300" src="images/dice.webp"/>
+		<img alt="" style="width: 800px" src="images/firebreather.webp"/>
 
 		<script src="dist-cjs/polyfills.js"></script>
 		<script src="dist-cjs/webp-hero.bundle.js"></script>
