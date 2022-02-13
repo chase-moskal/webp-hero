@@ -1,6 +1,15 @@
 
 # webp-hero changelog
 
+## v0.0.0-dev.29
+
+non-breaking changes:
+- add static member canvas helpers to WebpMachine
+	- `WebpMachine.replaceImageWithCanvas`
+	- `WebpMachine.cloneCanvas`
+- improve canvas helper functions, fix scrolling while hovering over canvas
+- improve demo page
+
 ## v0.0.0-dev.28 — 2022-02-12
 
 non-breaking changes:
