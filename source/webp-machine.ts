@@ -144,6 +144,7 @@ function cloneCanvas(oldCanvas: HTMLCanvasElement) {
 	newCanvas.style.display = oldCanvas.style.display
 	newCanvas.style.width = oldCanvas.style.width
 	newCanvas.style.height = oldCanvas.style.height
+	newCanvas.style.pointerEvents = oldCanvas.style.pointerEvents
 	const context = newCanvas.getContext("2d")
 	context.drawImage(oldCanvas, 0, 0)
 	return newCanvas
@@ -154,7 +155,7 @@ function replaceImageWithCanvas(image: HTMLImageElement, canvas: HTMLCanvasEleme
 	canvas.style.display = image.style.display
 	canvas.style.width = image.style.width
 	canvas.style.height = image.style.height
+	canvas.style.pointerEvents = "none"
 	const parent = image.parentElement
-	parent.removeChild(image)
-	parent.appendChild(canvas)
+	parent.replaceChild(canvas, image)
 }
