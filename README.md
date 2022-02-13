@@ -21,13 +21,13 @@ browser polyfill for the webp image format
 	- iphone 7 mobile safari
 	- galaxy s5 samsung internet
 	- icecat 60.7 *(requires option `{useCanvasElements: true}`)*
+- ⚖️ `98 KB`
 - ⚠️ known issues and deficiencies
 	- doesn't yet support css background images (pull requests welcome!)
 	- doesn't yet support `<picture>` elements
 	- doesn't yet support web workers (decodes images one-at-a-time, blocking, single-threaded)
 	- currently only detects webp images with filename ending in `.webp` extension
 	- no wasm (because older browsers)
-	- at one megabyte, the decoder is quite heavy
 
 webp-hero installation and usage
 --------------------------------
