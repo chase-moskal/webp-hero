@@ -42,10 +42,22 @@ export class WebpMachine {
 	 */
 	 static replaceImageWithCanvas(image: HTMLImageElement, canvas: HTMLCanvasElement) {
 		canvas.className = image.className
-		canvas.style.display = image.style.display
+		canvas.style.cssText = window.getComputedStyle(image).cssText
+		canvas.style.pointerEvents = canvas.style.pointerEvents || "none"
+
+		const imageWidth = image.getAttribute("width")
+		const imageHeight = image.getAttribute("height")
+
 		canvas.style.width = image.style.width
+			|| (imageWidth
+				? `${imageWidth}px`
+				: "auto")
+
 		canvas.style.height = image.style.height
-		canvas.style.pointerEvents = "none"
+			|| (imageHeight
+				? `${imageHeight}px`
+				: "auto")
+
 		const parent = image.parentElement
 		parent.replaceChild(canvas, image)
 	}
@@ -58,10 +70,7 @@ export class WebpMachine {
 		newCanvas.className = oldCanvas.className
 		newCanvas.width = oldCanvas.width
 		newCanvas.height = oldCanvas.height
-		newCanvas.style.display = oldCanvas.style.display
-		newCanvas.style.width = oldCanvas.style.width
-		newCanvas.style.height = oldCanvas.style.height
-		newCanvas.style.pointerEvents = oldCanvas.style.pointerEvents
+		newCanvas.style.cssText = window.getComputedStyle(oldCanvas).cssText
 		const context = newCanvas.getContext("2d")
 		context.drawImage(oldCanvas, 0, 0)
 		return newCanvas
