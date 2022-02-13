@@ -38,6 +38,36 @@ export class WebpMachine {
 	}
 
 	/**
+	 * Replace an <img> element with a <canvas> element
+	 */
+	 static replaceImageWithCanvas(image: HTMLImageElement, canvas: HTMLCanvasElement) {
+		canvas.className = image.className
+		canvas.style.display = image.style.display
+		canvas.style.width = image.style.width
+		canvas.style.height = image.style.height
+		canvas.style.pointerEvents = "none"
+		const parent = image.parentElement
+		parent.replaceChild(canvas, image)
+	}
+
+	/**
+	 * Make a copy of a canvas element (useful for caching)
+	 */
+	static cloneCanvas(oldCanvas: HTMLCanvasElement) {
+		const newCanvas = document.createElement("canvas")
+		newCanvas.className = oldCanvas.className
+		newCanvas.width = oldCanvas.width
+		newCanvas.height = oldCanvas.height
+		newCanvas.style.display = oldCanvas.style.display
+		newCanvas.style.width = oldCanvas.style.width
+		newCanvas.style.height = oldCanvas.style.height
+		newCanvas.style.pointerEvents = oldCanvas.style.pointerEvents
+		const context = newCanvas.getContext("2d")
+		context.drawImage(oldCanvas, 0, 0)
+		return newCanvas
+	}
+
+	/**
 	 * Paint a webp image onto a canvas element
 	 */
 	async decodeToCanvas(canvas: HTMLCanvasElement, webpData: Uint8Array) {
@@ -79,8 +109,8 @@ export class WebpMachine {
 		if (this.detectWebpImage(image)) {
 			if (this.cache[src]) {
 				if (this.useCanvasElements) {
-					const canvas = cloneCanvas(<HTMLCanvasElement>this.cache[src])
-					replaceImageWithCanvas(image, canvas)
+					const canvas = WebpMachine.cloneCanvas(<HTMLCanvasElement>this.cache[src])
+					WebpMachine.replaceImageWithCanvas(image, canvas)
 				}
 				else
 					image.src = <string>this.cache[src]
@@ -93,7 +123,7 @@ export class WebpMachine {
 				if (this.useCanvasElements) {
 					const canvas = document.createElement("canvas")
 					await this.decodeToCanvas(canvas, webpData)
-					replaceImageWithCanvas(image, canvas)
+					WebpMachine.replaceImageWithCanvas(image, canvas)
 					this.cache[src] = canvas
 				}
 				else {
@@ -134,28 +164,4 @@ export class WebpMachine {
 	clearCache() {
 		this.cache = {}
 	}
-}
-
-function cloneCanvas(oldCanvas: HTMLCanvasElement) {
-	const newCanvas = document.createElement("canvas")
-	newCanvas.className = oldCanvas.className
-	newCanvas.width = oldCanvas.width
-	newCanvas.height = oldCanvas.height
-	newCanvas.style.display = oldCanvas.style.display
-	newCanvas.style.width = oldCanvas.style.width
-	newCanvas.style.height = oldCanvas.style.height
-	newCanvas.style.pointerEvents = oldCanvas.style.pointerEvents
-	const context = newCanvas.getContext("2d")
-	context.drawImage(oldCanvas, 0, 0)
-	return newCanvas
-}
-
-function replaceImageWithCanvas(image: HTMLImageElement, canvas: HTMLCanvasElement) {
-	canvas.className = image.className
-	canvas.style.display = image.style.display
-	canvas.style.width = image.style.width
-	canvas.style.height = image.style.height
-	canvas.style.pointerEvents = "none"
-	const parent = image.parentElement
-	parent.replaceChild(canvas, image)
 }
