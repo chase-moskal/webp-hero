@@ -5,6 +5,7 @@
 browser polyfill for the webp image format
 ------------------------------------------
 
+- 📦 `npm install webp-hero`
 - 🎉 webp images come alive, even in safari and ie11! _(firefox and edge now support webp)_
 - ⚙️ webp-hero actually runs google's `libwebp` decoder in the browser _(converts webp images to png on-the-fly)_
 - 🕹️ live demo
@@ -37,8 +38,8 @@ webp-hero installation and usage
 	1. load generic polyfills and the webp-hero global bundle via script tags
 
 		```html
-		<script src="https://unpkg.com/webp-hero@0.0.0/dist-cjs/polyfills.js"></script>
-		<script src="https://unpkg.com/webp-hero@0.0.0/dist-cjs/webp-hero.bundle.js"></script>
+		<script src="https://unpkg.com/webp-hero@0.0.1/dist-cjs/polyfills.js"></script>
+		<script src="https://unpkg.com/webp-hero@0.0.1/dist-cjs/webp-hero.bundle.js"></script>
 		```
 
 	2. run the webp-hero polyfill function on the document
@@ -75,7 +76,7 @@ webp-hero installation and usage
 
 		```html
 		<script type="module">
-			import {WebpMachine} from "https://unpkg.com/webp-hero@0.0.0/dist/webp-machine.js"
+			import {WebpMachine} from "https://unpkg.com/webp-hero@0.0.1/dist/webp-machine.js"
 			const webpMachine = new WebpMachine()
 			webpMachine.polyfillDocument()
 		</script>
