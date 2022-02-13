@@ -19,6 +19,7 @@ browser polyfill for the webp image format
 	- windows 7 ie11
 	- iphone 7 mobile safari
 	- galaxy s5 samsung internet
+	- icecat 60.7 *(requires option `{useCanvasElements: true}`)*
 - ⚠️ known issues and deficiencies
 	- doesn't yet support css background images (pull requests welcome!)
 	- doesn't yet support `<picture>` elements
