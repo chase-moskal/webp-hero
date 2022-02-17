@@ -40,11 +40,12 @@ export class WebpMachine {
 	private useCanvasElements = false
 
 	constructor({
-		webp = new Webp(),
-		webpSupport = detectWebpSupport(),
-		useCanvasElements = false,
-		detectWebpImage = improvedWebpImageDetector,
-	}: WebpMachineOptions = {}) {
+			webp = new Webp(),
+			webpSupport = detectWebpSupport(),
+			useCanvasElements = false,
+			detectWebpImage = improvedWebpImageDetector,
+		}: WebpMachineOptions = {}) {
+
 		this.webp = webp
 		this.webpSupport = webpSupport
 		this.useCanvasElements = useCanvasElements
@@ -141,27 +142,28 @@ export class WebpMachine {
 				}
 				else
 					image.src = <string>this.cache[src]
-				return
 			}
-			try {
-				const webpData = isBase64Url(src)
-					? convertDataURIToBinary(src)
-					: await loadBinaryData(src)
-				if (this.useCanvasElements) {
-					const canvas = document.createElement("canvas")
-					await this.decodeToCanvas(canvas, webpData)
-					WebpMachine.replaceImageWithCanvas(image, canvas)
-					this.cache[src] = canvas
+			else {
+				try {
+					const webpData = isBase64Url(src)
+						? convertDataURIToBinary(src)
+						: await loadBinaryData(src)
+					if (this.useCanvasElements) {
+						const canvas = document.createElement("canvas")
+						await this.decodeToCanvas(canvas, webpData)
+						WebpMachine.replaceImageWithCanvas(image, canvas)
+						this.cache[src] = canvas
+					}
+					else {
+						const pngData = await this.decode(webpData)
+						image.src = this.cache[src] = pngData
+					}
 				}
-				else {
-					const pngData = await this.decode(webpData)
-					image.src = this.cache[src] = pngData
+				catch (error) {
+					error.name = WebpMachineError.name
+					error.message = `failed to polyfill image "${src}": ${error.message}`
+					console.error(error)
 				}
-			}
-			catch (error) {
-				error.name = WebpMachineError.name
-				error.message = `failed to polyfill image "${src}": ${error.message}`
-				throw error
 			}
 		}
 	}
@@ -170,19 +172,11 @@ export class WebpMachine {
 	 * Polyfill webp format on the entire web page
 	 */
 	async polyfillDocument({
-		document = window.document
-	}: PolyfillDocumentOptions = {}): Promise<void> {
-		if (await this.webpSupport) return null
-		for (const image of Array.from(document.querySelectorAll("img"))) {
-			try {
-				await this.polyfillImage(image)
-			}
-			catch (error) {
-				error.name = WebpMachineError.name
-				error.message = `webp image polyfill failed for url "${image.src}": ${error}`
-				throw error
-			}
-		}
+			document = window.document
+		}: PolyfillDocumentOptions = {}): Promise<void> {
+
+		for (const image of Array.from(document.querySelectorAll("img")))
+			await this.polyfillImage(image)
 	}
 
 	/**
