@@ -1,6 +1,8 @@
 
 import {Webp} from "../libwebp/dist/webp.js"
 import {loadBinaryData} from "./load-binary-data.js"
+import {getMimeType} from "./utils/get-mime-type.js"
+import {parseDataUrl} from "./utils/parse-data-url.js"
 import {detectWebpSupport} from "./detect-webp-support.js"
 import {convertDataURIToBinary, isBase64Url} from "./convert-binary-data.js"
 import {WebpMachineOptions, PolyfillDocumentOptions, DetectWebpImage} from "./interfaces.js"
@@ -9,8 +11,20 @@ const relax = () => new Promise(resolve => setTimeout(resolve, 0))
 
 export class WebpMachineError extends Error {}
 
+/**
+ * detect a webp image by its extension
+ * @deprecated please use `improvedWebpImageDetector` instead, but note it returns a promise
+ */
 export const defaultDetectWebpImage: DetectWebpImage = (image: HTMLImageElement) =>
 	/\.webp.*$/i.test(image.src)
+
+export async function improvedWebpImageDetector(image: HTMLImageElement) {
+	const dataUrl = parseDataUrl(image.src)
+	const type = dataUrl
+		? dataUrl.format
+		: await getMimeType(image.src)
+	return type.indexOf("image/webp") !== -1
+}
 
 /**
  * Webp Machine
@@ -29,7 +43,7 @@ export class WebpMachine {
 		webp = new Webp(),
 		webpSupport = detectWebpSupport(),
 		useCanvasElements = false,
-		detectWebpImage = defaultDetectWebpImage,
+		detectWebpImage = improvedWebpImageDetector,
 	}: WebpMachineOptions = {}) {
 		this.webp = webp
 		this.webpSupport = webpSupport
@@ -113,9 +127,13 @@ export class WebpMachine {
 	 * Polyfill the webp format on the given <img> element
 	 */
 	async polyfillImage(image: HTMLImageElement): Promise<void> {
-		if (await this.webpSupport) return
+
+		if (await this.webpSupport)
+			return
+
 		const {src} = image
-		if (this.detectWebpImage(image)) {
+
+		if (await this.detectWebpImage(image)) {
 			if (this.cache[src]) {
 				if (this.useCanvasElements) {
 					const canvas = WebpMachine.cloneCanvas(<HTMLCanvasElement>this.cache[src])

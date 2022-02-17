@@ -1,7 +1,7 @@
 
 import {Webp} from "../libwebp/dist/webp.js"
 
-export type DetectWebpImage = (image: HTMLImageElement) => boolean
+export type DetectWebpImage = (image: HTMLImageElement) => boolean | Promise<boolean>
 
 export interface WebpMachineOptions {
 	webp?: Webp

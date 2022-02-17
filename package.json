@@ -14,7 +14,7 @@
 		"prepare": "run-s build test",
 		"build": "run-s clean barrel compile && run-p bundle polyfills",
 		"clean": "rimraf dist dist-cjs && mkdirp dist dist-cjs",
-		"barrel": "barrelsby --delete --directory source --exclude 'bundle.ts$'",
+		"barrel": "barrelsby --delete --directory source --exclude 'bundle.ts$' --exclude 'utils\\/.+$'",
 		"compile": "run-p compile-esm compile-cjs",
 		"compile-esm": "tsc",
 		"compile-cjs": "tsc --outDir dist-cjs --target es5 --module commonjs && replace 'libwebp\\/dist\\/webp\\.js' 'libwebp/dist/webp.cjs.js' dist-cjs/webp-machine.js",
