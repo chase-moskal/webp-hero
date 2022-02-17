@@ -7,9 +7,9 @@ export async function detectWebpSupport(): Promise<boolean> {
 	]
 
 	const testImage = (src: string): Promise<boolean> => {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			var img = document.createElement("img")
-			img.onerror = error => resolve(false)
+			img.onerror = () => resolve(false)
 			img.onload = () => resolve(true)
 			img.src = src
 		})
