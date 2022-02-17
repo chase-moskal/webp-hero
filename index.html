@@ -22,7 +22,7 @@
 			<p><a href="/libwebp/dist/google/index.html">google's webp demo</a></p>
 			<p><a href=".">.</a> standard webp usage</p>
 			<p><a href="./?force">?force</a> force webp decoding</p>
-			<p><a href="./?force?useCanvasElements">?force?useCanvasElements</a> replace images with canvases</p>
+			<p><a href="./?force&useCanvasElements">?force&useCanvasElements</a> replace images with canvases</p>
 		</section>
 
 		<img alt="" src="images/landscape.webp"/>
@@ -41,14 +41,14 @@
 
 			// for this demo, you can add "?force" to the url to force webp conversion
 			var webpSupport = location.search.indexOf("force") !== -1
-				? Promise.resolve(false)
+				? false
 				: undefined
 
 			// you can also add "?useCanvasElements" to the url
-			// to replace img elements with canvases
+			// to force replacement of img elements with canvases
 			var useCanvasElements = location.search.indexOf("useCanvasElements") !== -1
 				? true
-				: false
+				: undefined
 
 			// instance the webp machine
 			var webpMachine = new webpHero.WebpMachine({

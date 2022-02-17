@@ -6,6 +6,7 @@ import {parseDataUrl} from "./utils/parse-data-url.js"
 import {detectWebpSupport} from "./detect-webp-support.js"
 import {convertDataURIToBinary, isBase64Url} from "./convert-binary-data.js"
 import {WebpMachineOptions, PolyfillDocumentOptions, DetectWebpImage} from "./interfaces.js"
+import { detectCanvasReadingSupport } from "./detect-canvas-reading-support.js"
 
 const relax = () => new Promise(resolve => setTimeout(resolve, 0))
 
@@ -33,16 +34,16 @@ export async function improvedWebpImageDetector(image: HTMLImageElement) {
  */
 export class WebpMachine {
 	private readonly webp: Webp
-	private readonly webpSupport: Promise<boolean>
+	private readonly webpSupport: boolean | Promise<boolean>
 	private readonly detectWebpImage: DetectWebpImage
 	private busy = false
 	private cache: {[key: string]: string | HTMLCanvasElement} = {}
-	private useCanvasElements = false
+	private useCanvasElements: boolean
 
 	constructor({
 			webp = new Webp(),
 			webpSupport = detectWebpSupport(),
-			useCanvasElements = false,
+			useCanvasElements = !detectCanvasReadingSupport(),
 			detectWebpImage = improvedWebpImageDetector,
 		}: WebpMachineOptions = {}) {
 

@@ -5,7 +5,7 @@ export type DetectWebpImage = (image: HTMLImageElement) => boolean | Promise<boo
 
 export interface WebpMachineOptions {
 	webp?: Webp
-	webpSupport?: Promise<boolean>
+	webpSupport?: boolean | Promise<boolean>
 	detectWebpImage?: DetectWebpImage
 	useCanvasElements?: boolean
 }
