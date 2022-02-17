@@ -1,6 +1,14 @@
 
 # webp-hero changelog
 
+## v0.0.2 — 2022-02-17
+
+non-breaking changes:
+- add webp data url support
+- WebpMachine option `useCanvasElements` is now auto-detected via the newly available `detectCanvasReadingSupport` function
+- polyfill functions no longer throw errors, merely console.error them
+- WebpMachine option `webpSupport` no longer has to be a promise, it can just be a boolean (or a promised boolean)
+
 ## v0.0.1 — 2022-02-13
 
 non-breaking changes:
