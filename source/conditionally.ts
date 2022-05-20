@@ -1,35 +1,24 @@
+import {detectWebpSupport} from "./detect-webp-support";
+import {loadScript} from "./load-script";
+
 declare const webpHero;
 
-/**
- * Check if WebP is supported by the current browser.
- */
- export function isWebpSupported(callback) {
-	var img = new Image();
-	img.onload = function () {
-		var result = (img.width > 0) && (img.height > 0);
-		callback(result);
-	};
-	img.onerror = function () {
-		callback(false) ;
-	};
-	img.src = "data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA"; // Lossy WebP image.
-}
+const _webpPolyfillUrl = window["webpPolyfillUrl"] || 'https://unpkg.com/webp-hero@0.0.2/dist-cjs/polyfills.js';
+const _webpBundleUrl = window["webpBundleUrl"] || 'https://unpkg.com/webp-hero@0.0.2/dist-cjs/webp-hero.bundle.js';
 
-(function() {
-	isWebpSupported(function(support) {
-		if (! support) {
-			var js = document.createElement('script');
-			js.src = 'https://unpkg.com/webp-hero@0.0.2/dist-cjs/polyfills.js';
-			document.body.appendChild(js)
-			js.addEventListener('load', function() {
-				var js2 = document.createElement('script');
-				js2.src = 'https://unpkg.com/webp-hero@0.0.2/dist-cjs/webp-hero.bundle.js';
-				document.body.appendChild(js2);
-				js2.addEventListener('load', function() {
-					var webpMachine = new webpHero.WebpMachine();
-					webpMachine.polyfillDocument();
-				});
-			});
-		}
-	});
+/**
+ * This code executes immediately, detects WebP support and loads the
+ * webp-hero polyfill and bundle and as needed.
+ *
+ * Loads webp-hero from the unpkg CDN by default, specify alternate source URLs
+ * by setting window["webpPolyfillUrl"] and window["webpBundleUrl"] before loading.
+ */
+(async function() {
+	const webpSupported = await detectWebpSupport();
+	if (! webpSupported) {
+		await loadScript(_webpPolyfillUrl);
+		await loadScript(_webpBundleUrl);
+		var webpMachine = new webpHero.WebpMachine();
+		webpMachine.polyfillDocument();
+	}
 })();
