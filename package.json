@@ -12,13 +12,14 @@
 	],
 	"scripts": {
 		"prepare": "run-s build test",
-		"build": "run-s clean barrel compile && run-p bundle polyfills",
+		"build": "run-s clean barrel compile && run-p bundle polyfills conditionally",
 		"clean": "rimraf dist dist-cjs && mkdirp dist dist-cjs",
-		"barrel": "barrelsby --delete --directory source --exclude 'bundle.ts$' --exclude 'utils\\/.+$'",
+		"barrel": "barrelsby --delete --directory source --exclude 'bundle.ts$' --exclude 'utils\\/.+$' --exclude 'conditionally.ts$'",
 		"compile": "run-p compile-esm compile-cjs",
 		"compile-esm": "tsc",
 		"compile-cjs": "tsc --outDir dist-cjs --target es5 --module commonjs && replace 'libwebp\\/dist\\/webp\\.js' 'libwebp/dist/webp.cjs.js' dist-cjs/webp-machine.js",
 		"bundle": "browserify dist-cjs/webp-hero.bundle.js -p tinyify -o dist-cjs/webp-hero.bundle.js",
+		"conditionally": "browserify dist-cjs/conditionally.js -p tinyify -o dist-cjs/load-webp-hero-conditionally.js",
 		"polyfills": "concat-cli -f node_modules/es6-promise/dist/es6-promise.auto.min.js -f node_modules/mdn-polyfills/Array.from.js -o dist-cjs/polyfills.js",
 		"test": "exit 0",
 		"start": "http-server -p 5000"
