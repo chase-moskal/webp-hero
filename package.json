@@ -19,7 +19,7 @@
 		"compile-esm": "tsc",
 		"compile-cjs": "tsc --outDir dist-cjs --target es5 --module commonjs && replace 'libwebp\\/dist\\/webp\\.js' 'libwebp/dist/webp.cjs.js' dist-cjs/webp-machine.js",
 		"bundle": "browserify dist-cjs/webp-hero.bundle.js -p tinyify -o dist-cjs/webp-hero.bundle.js",
-		"conditionally": "browserify dist-cjs/conditionally.js -p tinyify -o dist-cjs/load-webp-hero-conditionally.js",
+		"conditionally": "browserify dist-cjs/conditionally.js -p tinyify -o dist-cjs/conditionally.js",
 		"polyfills": "concat-cli -f node_modules/es6-promise/dist/es6-promise.auto.min.js -f node_modules/mdn-polyfills/Array.from.js -o dist-cjs/polyfills.js",
 		"test": "exit 0",
 		"start": "http-server -p 5000"
