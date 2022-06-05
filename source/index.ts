@@ -7,5 +7,4 @@ export * from "./detect-canvas-reading-support";
 export * from "./detect-webp-support";
 export * from "./interfaces";
 export * from "./load-binary-data";
-export * from "./load-script";
 export * from "./webp-machine";

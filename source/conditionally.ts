@@ -1,9 +1,9 @@
 
 import type * as webpHeroModule from "."
 
-import {loadScript} from "./load-script"
-import {detectWebpSupport} from "./detect-webp-support"
-import {getScriptSettingsForConditionally} from "./utils/get-script-settings-for-conditionally"
+import {detectWebpSupport} from "./detect-webp-support.js"
+import {getConditionallySettings} from "./utils/get-conditionally-settings.js"
+import {loadBundleAndMaybePolyfills} from "./utils/load-bundle-and-maybe-polyfills.js"
 
 type WebpHeroResult = typeof webpHeroModule | void
 
@@ -15,27 +15,26 @@ declare global {
 }
 
 window.webpHeroPromise = Promise.resolve().then(async() => {
-	const selector = "script[data-webp-hero]"
-	const settings = getScriptSettingsForConditionally({selector})
+	const {attributes, bundleUrl, polyfillsUrl}
+		= getConditionallySettings("script[data-webp-hero]")
 
-	const webpSupport = settings.force
+	const webpSupport = attributes.force
 		? false
 		: await detectWebpSupport()
 
 	if (! webpSupport) {
-		await loadScript(settings.bundleUrl)
+		await loadBundleAndMaybePolyfills({bundleUrl, polyfillsUrl})
 		const {webpHero} = window
 
-		if (! settings.useCustomBehavior) {
+		if (! attributes.useCustomBehavior) {
 			const webpMachine = new webpHero.WebpMachine({
 				webpSupport,
-				useCanvasElements: settings.forceUseCanvasElements
+				useCanvasElements: attributes.forceUseCanvasElements
 					? true
 					: undefined,
 			})
 			await webpMachine.polyfillDocument()
 		}
-
 		return webpHero
 	}
 })
